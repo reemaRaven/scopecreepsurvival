@@ -1,0 +1,279 @@
+{
+  "id": "day-4",
+  "dayNumber": 4,
+  "brief": "Thursday. Demo day. All eyes on the feature. The board is watching. Legal is watching. Your team hasn't slept properly since Monday. This is what the sprint was for.",
+  "modifier": {
+    "id": "mod-demo-day",
+    "title": "All Eyes On You",
+    "description": "It's demo day. Stakeholder trust gains and losses are doubled for all choices today.",
+    "statDelta": {
+      "teamHealth": -1
+    }
+  },
+  "phases": [
+    {
+      "id": "day-4-morning",
+      "phase": "morning",
+      "scenario": {
+        "id": "s-demo-day-day4",
+        "type": "demo-day",
+        "title": "The Quarterly Demo",
+        "flavor": "10:00 AM. Exec team, board observer, and Sales are all in the meeting.",
+        "description": "The quarterly all-hands product demo starts in 10 minutes. The feature is functional on staging. Prod is running the previous version. Jenkins pushed a commit to main at 9:45 AM without flagging it. You have: a working staging environment, a 70% working prod build, and a room full of expectations.",
+        "choices": [
+          {
+            "id": "c-demo-staging",
+            "text": "Demo from staging. Stable, controlled, safe.",
+            "consequence": "The demo is flawless. Every feature works. Execs applaud. Sales is pleased. One board observer asks 'when will this be in prod?' You smile and say 'soon'. It is the most confident 'soon' you have ever said.",
+            "statDelta": { "stakeholderTrust": 3, "teamHealth": 1, "deliverySpeed": 3 },
+            "itemGained": "okr-doc",
+            "itemConsumed": null,
+            "questProgress": "q-demo-success-d4"
+          },
+          {
+            "id": "c-demo-prod-risk",
+            "text": "Demo from prod. More impressive, higher risk.",
+            "consequence": "The demo works for 8 minutes. On minute 9, an edge case surfaces. You handle it smoothly. The board observer writes something in their notes. You do not know what.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": -2, "deliverySpeed": 5, "riskCompliance": 2 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-demo-success-d4"
+          },
+          {
+            "id": "c-demo-cancel",
+            "text": "Cancel and reschedule. 'The environment needs 24 more hours.'",
+            "consequence": "Rescheduled for tomorrow. The board observer has a flight in the morning. They will not attend the rescheduled demo. This cost more than you expected.",
+            "statDelta": { "stakeholderTrust": -3, "teamHealth": 2, "deliverySpeed": -5 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          }
+        ],
+        "randomEvent": {
+          "id": "e-jenkins-commit",
+          "type": "random",
+          "rarity": 1,
+          "title": "Jenkins' 9:45 AM Commit Caused a Warning",
+          "description": "Jenkins' push triggered a non-blocking build warning. It didn't break anything. It will be mentioned in the post-demo retro by three different people.",
+          "statDelta": { "teamHealth": -1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-standing-ovation",
+          "type": "rare",
+          "rarity": 0.15,
+          "title": "Board Observer Stands Up to Applaud",
+          "description": "The board observer stands up — literally stands up — and says 'This is exactly what we funded you to build.' It is the most validation you have felt in two years.",
+          "statDelta": { "stakeholderTrust": 4, "teamHealth": 3 },
+          "itemDropped": "okr-doc",
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-4-midday",
+      "phase": "midday",
+      "scenario": {
+        "id": "s-incident-day4",
+        "type": "incident",
+        "title": "Right After the Demo",
+        "flavor": "11:47 AM. The demo ended 12 minutes ago. PagerDuty fires.",
+        "description": "The inference API starts returning 500 errors at scale — 8 minutes after the demo ended. 15% of requests are failing. User-facing error messages are showing. Jenkins' commit is a suspect. The board observer is still in the building.",
+        "choices": [
+          {
+            "id": "c-incident2-rollback",
+            "text": "Immediate rollback. Jenkins' commit is reverted.",
+            "consequence": "Rollback takes 4 minutes. Service restored. The board observer was told 'we had a minor post-demo blip, already resolved.' That framing was accurate and also artful.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": -1, "deliverySpeed": -3, "riskCompliance": -1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-demo-success-d4"
+          },
+          {
+            "id": "c-incident2-debug",
+            "text": "Debug first to confirm root cause before rollback.",
+            "consequence": "Root cause confirmed in 20 minutes. It was Jenkins' commit. Rollback then takes 4 minutes. Total outage: 24 minutes. You were thorough. That thoroughness cost 24 minutes.",
+            "statDelta": { "stakeholderTrust": -1, "modelQuality": 1, "deliverySpeed": -5, "riskCompliance": 1 },
+            "itemGained": "rubber-duck",
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-incident2-communicate",
+            "text": "Communicate proactively to stakeholders while debugging.",
+            "consequence": "Stakeholders appreciate the real-time updates. The incident takes 25 minutes to resolve but nobody panics. Trust is maintained through transparency.",
+            "statDelta": { "stakeholderTrust": 2, "teamHealth": -1, "deliverySpeed": -5 },
+            "itemGained": "stakeholder-email",
+            "itemConsumed": null,
+            "questProgress": null
+          }
+        ],
+        "randomEvent": {
+          "id": "e-user-tweet",
+          "type": "random",
+          "rarity": 1,
+          "title": "A Power User Tweets About the Error",
+          "description": "A power user with 12,000 followers tweets: 'Is [product] down? Getting errors on the AI feature.' It has 18 retweets. Your community manager sends you a screenshot.",
+          "statDelta": { "stakeholderTrust": -1, "riskCompliance": 1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-jenkins-apology",
+          "type": "rare",
+          "rarity": 0.25,
+          "title": "Jenkins Writes a Post-Mortem Immediately",
+          "description": "Jenkins, without being asked, writes a detailed post-mortem, identifies systemic improvements, and shares it in #engineering. The team's respect for Jenkins increases substantially.",
+          "statDelta": { "teamHealth": 2, "riskCompliance": -2 },
+          "itemDropped": null,
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-4-afternoon",
+      "phase": "afternoon",
+      "scenario": {
+        "id": "s-privacy-day4",
+        "type": "privacy-review",
+        "title": "The DPA Signing Crisis",
+        "flavor": "2:00 PM. Legal: 'We need signatures before EU goes live.'",
+        "description": "Legal has confirmed the Data Processing Agreement needs countersignatures from two vendors before the EU region launch. One vendor is responsive. The other hasn't replied in 5 days. The EU launch is in 48 hours. You can delay EU launch, escalate vendor pressure, or proceed without and accept the compliance risk.",
+        "choices": [
+          {
+            "id": "c-dpa-delay-eu",
+            "text": "Delay EU launch until both DPAs are signed.",
+            "consequence": "EU launch pushed 1 week. US launches on time. Legal is satisfied. Your EU-based enterprise client is mildly frustrated. You document everything.",
+            "statDelta": { "stakeholderTrust": -1, "deliverySpeed": -5, "riskCompliance": -3 },
+            "itemGained": "dpa-doc",
+            "itemConsumed": null,
+            "questProgress": "q-compliance-resolution-d4"
+          },
+          {
+            "id": "c-dpa-escalate",
+            "text": "Escalate to vendor's leadership. Request signature today.",
+            "consequence": "Your CEO emails their CEO. Signature arrives in 4 hours. EU launch proceeds. The relationship with the vendor is slightly strained. Progress.",
+            "statDelta": { "stakeholderTrust": 1, "deliverySpeed": -2, "riskCompliance": -2 },
+            "itemGained": "dpa-doc",
+            "itemConsumed": null,
+            "questProgress": "q-compliance-resolution-d4"
+          },
+          {
+            "id": "c-dpa-proceed",
+            "text": "Proceed without. Add it to the post-launch action list.",
+            "consequence": "EU launches. Legal documents their objection with unusual thoroughness. The action list now has a DPA item with a red 'OVERDUE' badge. It has been there 72 hours.",
+            "statDelta": { "deliverySpeed": 5, "riskCompliance": 4, "stakeholderTrust": 1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          }
+        ],
+        "randomEvent": {
+          "id": "e-vendor-ping",
+          "type": "random",
+          "rarity": 1,
+          "title": "Unresponsive Vendor Finally Responds",
+          "description": "The vendor who hasn't replied in 5 days sends a message: 'Apologies for the delay — we've had some internal changes.' They have not signed anything. They are aware of the document.",
+          "statDelta": { "riskCompliance": -1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-dpa-auto-sign",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "Vendor Signs Without Escalation",
+          "description": "The unresponsive vendor emails back with a signed DPA, no prompting required. 'We just got to it.' You will never understand what changed. You will not question it.",
+          "statDelta": { "riskCompliance": -3, "stakeholderTrust": 1 },
+          "itemDropped": "dpa-doc",
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-4-evening",
+      "phase": "evening",
+      "scenario": {
+        "id": "s-debrief-day4",
+        "type": "leadership-update",
+        "title": "Post-Demo Debrief",
+        "flavor": "5:45 PM. The day is almost over. Almost.",
+        "description": "The exec team gathers for a post-demo debrief. The demo went well (mostly). The incident was handled (mostly). EU launch is TBD. One exec asks: 'What's the honest state of the product heading into the final sprint day tomorrow?'",
+        "choices": [
+          {
+            "id": "c-debrief-honest",
+            "text": "Full honest assessment: strengths, gaps, and risk.",
+            "consequence": "Execs nod. One says: 'This is the most useful post-demo debrief we've had.' You have set a precedent. It will now be expected every quarter.",
+            "statDelta": { "stakeholderTrust": 2, "teamHealth": 2, "riskCompliance": -2 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-debrief-positive",
+            "text": "Lead with wins. Acknowledge one risk briefly.",
+            "consequence": "Good energy in the room. The one acknowledged risk gets more scrutiny than it would have if you'd included two. This is the paradox of selective transparency.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": 1, "riskCompliance": 1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-debrief-next-steps",
+            "text": "Skip the review. Dive straight into tomorrow's plan.",
+            "consequence": "The exec team appreciates the forward momentum. They also have questions about today that are now deferred to a follow-up that will happen over Slack at 9 PM.",
+            "statDelta": { "deliverySpeed": 3, "stakeholderTrust": 0, "teamHealth": -1 },
+            "itemGained": "roadmap",
+            "itemConsumed": null,
+            "questProgress": "q-demo-success-d4"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-board-followup",
+          "type": "random",
+          "rarity": 1,
+          "title": "Board Observer Sends a Follow-Up Question",
+          "description": "The board observer emails: 'Quick question on the model eval numbers — what's the plan to close the baseline gap by next quarter?' The email is CC'd to the CEO.",
+          "statDelta": { "stakeholderTrust": -1, "riskCompliance": 1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-ceo-message",
+          "type": "rare",
+          "rarity": 0.15,
+          "title": "CEO Sends a Private Thank You",
+          "description": "The CEO messages you privately: 'Today was hard and you handled it well. Thank you for keeping things stable.' You screenshot it. You will keep it. It will sustain you during Q4.",
+          "statDelta": { "stakeholderTrust": 3, "teamHealth": 2 },
+          "itemDropped": "coffee",
+          "questUnlocked": null
+        }
+      }
+    }
+  ],
+  "quests": [
+    {
+      "id": "q-demo-success-d4",
+      "title": "Demo Day Survival",
+      "description": "Navigate 3 decisions that keep the demo and its aftermath under control.",
+      "type": "daily",
+      "steps": 3,
+      "reward": { "statDelta": { "stakeholderTrust": 3, "teamHealth": 1 }, "itemId": "okr-doc", "xp": 60 },
+      "failPenalty": { "stakeholderTrust": -2 },
+      "expiresDay": 4,
+      "hidden": false
+    },
+    {
+      "id": "q-compliance-resolution-d4",
+      "title": "Close the DPA Gap",
+      "description": "Resolve the vendor DPA situation before EU launch.",
+      "type": "daily",
+      "steps": 1,
+      "reward": { "statDelta": { "riskCompliance": -2, "stakeholderTrust": 1 }, "itemId": "dpa-doc", "xp": 45 },
+      "failPenalty": { "riskCompliance": 3 },
+      "expiresDay": 5,
+      "hidden": false
+    }
+  ]
+}

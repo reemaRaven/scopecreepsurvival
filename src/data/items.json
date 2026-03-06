@@ -1,0 +1,154 @@
+[
+  {
+    "id": "coffee",
+    "name": "Coffee",
+    "emoji": "☕",
+    "description": "Restores 2 teamHealth and 5 deliverySpeed. The only true currency of tech.",
+    "flavor": "Double espresso. It doesn't fix the sprint. It makes you feel like it might.",
+    "effect": { "teamHealth": 2, "deliverySpeed": 5 },
+    "uses": 1,
+    "category": "consumable"
+  },
+  {
+    "id": "jira-ticket",
+    "name": "JIRA Ticket",
+    "emoji": "📋",
+    "description": "+8 deliverySpeed when used. A pre-written, well-scoped ticket — a rare artifact.",
+    "flavor": "Estimated: 1 point. Actual: unknown. Status: In Progress, since Q1.",
+    "effect": { "deliverySpeed": 8 },
+    "uses": 1,
+    "category": "document"
+  },
+  {
+    "id": "rubber-duck",
+    "name": "Rubber Duck",
+    "emoji": "🦆",
+    "description": "+1 teamHealth, +1 modelQuality. Explain the problem to it. It always understands.",
+    "flavor": "The duck has heard every architectural debate since 2019. It is unimpressed but supportive.",
+    "effect": { "teamHealth": 1, "modelQuality": 1 },
+    "uses": -1,
+    "category": "artifact"
+  },
+  {
+    "id": "roadmap",
+    "name": "Product Roadmap",
+    "emoji": "🗺️",
+    "description": "+2 stakeholderTrust, +5 deliverySpeed. A living document that inspires clarity.",
+    "flavor": "Subject to change. Has always been subject to change. Will always be subject to change.",
+    "effect": { "stakeholderTrust": 2, "deliverySpeed": 5 },
+    "uses": 1,
+    "category": "document"
+  },
+  {
+    "id": "prompt-template",
+    "name": "Prompt Template",
+    "emoji": "✨",
+    "description": "+3 modelQuality, -1 riskCompliance. A validated, safety-reviewed prompt pattern.",
+    "flavor": "Engineered through 400 iterations. Handles edge cases. Mostly.",
+    "effect": { "modelQuality": 3, "riskCompliance": -1 },
+    "uses": 1,
+    "category": "tool"
+  },
+  {
+    "id": "kpi-dashboard",
+    "name": "KPI Dashboard",
+    "emoji": "📊",
+    "description": "+2 stakeholderTrust, +1 teamHealth. Real numbers silence most arguments.",
+    "flavor": "Live data. Unless the tracking is broken. Which it was, last Tuesday.",
+    "effect": { "stakeholderTrust": 2, "teamHealth": 1 },
+    "uses": 1,
+    "category": "tool"
+  },
+  {
+    "id": "dpa-doc",
+    "name": "DPA Document",
+    "emoji": "🛡️",
+    "description": "-3 riskCompliance. A signed Data Processing Agreement. Legal is temporarily satisfied.",
+    "flavor": "87 pages. You have read 4 of them. Legal has read all 87. They are not the same 4.",
+    "effect": { "riskCompliance": -3 },
+    "uses": 1,
+    "category": "document"
+  },
+  {
+    "id": "stakeholder-email",
+    "name": "Stakeholder Email",
+    "emoji": "📧",
+    "description": "+2 stakeholderTrust. A carefully crafted async update. Buys you 24–48 hours.",
+    "flavor": "Subject: Quick Update. Body: 400 words. Subtext: Please don't escalate.",
+    "effect": { "stakeholderTrust": 2 },
+    "uses": 1,
+    "category": "document"
+  },
+  {
+    "id": "okr-doc",
+    "name": "OKR Document",
+    "emoji": "🎯",
+    "description": "+3 stakeholderTrust, +5 deliverySpeed. Aligned objectives create momentary peace.",
+    "flavor": "Key Results are measurable this quarter. That's already an improvement.",
+    "effect": { "stakeholderTrust": 3, "deliverySpeed": 5 },
+    "uses": 1,
+    "category": "document"
+  },
+  {
+    "id": "cancel-meeting",
+    "name": "Cancel Token",
+    "emoji": "🚫",
+    "description": "+3 teamHealth, +5 deliverySpeed, -1 stakeholderTrust. Skip one meeting. Use wisely.",
+    "flavor": "This meeting could have been an email. It will now be an email.",
+    "effect": { "teamHealth": 3, "deliverySpeed": 5, "stakeholderTrust": -1 },
+    "uses": 1,
+    "category": "tool",
+    "unlocksAtLevel": 2
+  },
+  {
+    "id": "tech-debt-bomb",
+    "name": "Tech Debt Bomb",
+    "emoji": "💣",
+    "description": "+15 deliverySpeed NOW. Holds a 30% daily explosion risk: -5 speed, -2 quality, -1 teamHealth.",
+    "flavor": "You'll deal with it next sprint. Next sprint is a myth.",
+    "effect": { "deliverySpeed": 15 },
+    "uses": 1,
+    "category": "artifact"
+  },
+  {
+    "id": "stress-ball",
+    "name": "Stress Ball",
+    "emoji": "🟠",
+    "description": "+2 teamHealth. Squeeze it. It has absorbed the frustration of three sprints.",
+    "flavor": "Dented on one side from the Q3 scope creep incident. A survivor.",
+    "effect": { "teamHealth": 2 },
+    "uses": 3,
+    "category": "consumable"
+  },
+  {
+    "id": "model-card",
+    "name": "Model Card",
+    "emoji": "📄",
+    "description": "+2 modelQuality, -2 riskCompliance. Formal documentation of model capabilities and limitations. Legal accepts this.",
+    "flavor": "Intended use, known limitations, eval results. The document that proves you thought about it before shipping.",
+    "effect": { "modelQuality": 2, "riskCompliance": -2 },
+    "uses": 1,
+    "category": "document",
+    "unlocksAtLevel": 3
+  },
+  {
+    "id": "energy-drink",
+    "name": "Energy Drink",
+    "emoji": "⚡",
+    "description": "+15 deliverySpeed, -2 teamHealth. Heroic velocity. Brief. The crash is real.",
+    "flavor": "Third one this week. The engineers can tell. You can tell they can tell. Ship faster.",
+    "effect": { "deliverySpeed": 15, "teamHealth": -2 },
+    "uses": 1,
+    "category": "consumable"
+  },
+  {
+    "id": "retro-notes",
+    "name": "Retro Notes",
+    "emoji": "📝",
+    "description": "+3 teamHealth, +2 deliverySpeed. The team said what needed saying. You wrote it down. It helped.",
+    "flavor": "Action items: 4. Resolved action items: 1. Feelings processed: many. Net positive.",
+    "effect": { "teamHealth": 3, "deliverySpeed": 2 },
+    "uses": 2,
+    "category": "document"
+  }
+]

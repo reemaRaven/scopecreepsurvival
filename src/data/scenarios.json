@@ -1,0 +1,383 @@
+[
+  {
+    "id": "blockchain-pitch",
+    "phase": "morning",
+    "day": "any",
+    "title": "The Blockchain Pitch",
+    "flavor": "8:47 AM. The CEO slides into your DMs.",
+    "description": "CEO: 'What if we just... added blockchain to the onboarding flow? It would really differentiate us.' The sprint ends in 4 days.",
+    "choices": [
+      {
+        "text": "Enthusiastically agree",
+        "effect": { "velocity": -4, "trust": 2, "sanity": -1 },
+        "consequence": "You just added 6 weeks of scope. The devs are crying quietly at their desks."
+      },
+      {
+        "text": "Push back with data",
+        "effect": { "sanity": 2, "trust": -1, "velocity": 1 },
+        "consequence": "The CEO nods slowly. Books a 'quick sync' for Thursday. There is no quick sync."
+      },
+      {
+        "text": "Create a JIRA ticket for it",
+        "effect": { "energy": -1 },
+        "item": "jira-ticket",
+        "consequence": "The ticket sits in the backlog forever. Strategic victory."
+      }
+    ]
+  },
+  {
+    "id": "standup-spiral",
+    "phase": "morning",
+    "day": "any",
+    "title": "The Standup Spiral",
+    "flavor": "9:03 AM. Jenkins is explaining his weekend. Again.",
+    "description": "The daily standup is 47 minutes in. Jenkins is live-debugging in the call. Three engineers have muted themselves. Someone is definitely doing laundry.",
+    "choices": [
+      {
+        "text": "Let it flow — team bonding",
+        "effect": { "energy": -2, "trust": 1, "velocity": -2 },
+        "consequence": "You bond over shared suffering. Productivity: aspirational."
+      },
+      {
+        "text": "Cut it off politely",
+        "effect": { "velocity": 2, "trust": -1, "energy": 1 },
+        "consequence": "Three engineers unsubscribe from your Slack DMs. Worth it."
+      },
+      {
+        "text": "Take detailed notes",
+        "effect": { "energy": -1, "sanity": -1 },
+        "item": "jira-ticket",
+        "consequence": "You now have 47 action items. Most are Jenkins' weekend plans."
+      }
+    ]
+  },
+  {
+    "id": "scope-creep-classic",
+    "phase": "morning",
+    "day": "any",
+    "title": "The One Small Banner",
+    "flavor": "9:31 AM. Marketing has a 'quick request'.",
+    "description": "Marketing: 'We just need one small banner on the homepage. Maybe with an animation. And a countdown timer. Oh, and can it be personalized?'",
+    "choices": [
+      {
+        "text": "Accept it, squeeze it in",
+        "effect": { "velocity": -3, "trust": 1, "sanity": -1 },
+        "consequence": "The 'small' banner consumes the entire sprint. The timer is broken on mobile."
+      },
+      {
+        "text": "Push to next sprint",
+        "effect": { "velocity": 2, "trust": -1, "sanity": 1 },
+        "consequence": "Next sprint also has no room. The banner lives in the backlog now."
+      },
+      {
+        "text": "Ask 'What does success look like?'",
+        "effect": { "sanity": 2, "trust": 2, "velocity": 1 },
+        "consequence": "Marketing goes quiet for 3 days trying to answer. You win... for now."
+      }
+    ]
+  },
+  {
+    "id": "production-down",
+    "phase": "afternoon",
+    "day": "any",
+    "title": "Production is Down",
+    "flavor": "2:14 PM. PagerDuty is screaming.",
+    "description": "Alerts firing. Users tweeting. The CEO has seen the tweet. You have exactly zero context on what's broken.",
+    "choices": [
+      {
+        "text": "Drop everything, join the war room",
+        "effect": { "trust": 2, "velocity": -3, "energy": -2 },
+        "consequence": "Crisis contained in 2 hours. Status page updated. You haven't eaten."
+      },
+      {
+        "text": "Delegate to eng lead, write updates",
+        "effect": { "trust": 1, "sanity": 1, "energy": -1 },
+        "consequence": "The issue is fixed. Your status updates were impeccable. Team respects you."
+      },
+      {
+        "text": "Post 'We are investigating' and wait",
+        "effect": { "trust": -1, "sanity": 1, "energy": 1 },
+        "consequence": "The tweet gets 200 angry replies. The CEO DMed you."
+      }
+    ]
+  },
+  {
+    "id": "refactor-request",
+    "phase": "afternoon",
+    "day": "any",
+    "title": "The Refactor Request",
+    "flavor": "2:55 PM. The lead dev has a PowerPoint.",
+    "description": "Lead dev: 'We need 2 weeks to refactor the auth system. It's held together with duct tape. If we don't do this now, we will regret it in Q3.' They are right. Q3 is soon.",
+    "choices": [
+      {
+        "text": "Support it, delay the sprint",
+        "effect": { "velocity": -4, "sanity": 2, "trust": -1 },
+        "item": "roadmap",
+        "consequence": "Future you thanks present you. Current stakeholders do not."
+      },
+      {
+        "text": "Negotiate: half a sprint for refactor",
+        "effect": { "velocity": -1, "sanity": 1, "trust": 1 },
+        "consequence": "Everyone is mildly unhappy. That means you found the right answer."
+      },
+      {
+        "text": "Defer to next quarter",
+        "effect": { "velocity": 3, "sanity": -2 },
+        "item": "tech-debt-bomb",
+        "consequence": "Sprint velocity is great! You now carry a ticking time bomb."
+      }
+    ]
+  },
+  {
+    "id": "pivot-moment",
+    "phase": "afternoon",
+    "day": "any",
+    "title": "The Pivot Moment",
+    "flavor": "3:20 PM. User research just landed.",
+    "description": "80% of users skip the core feature you've been building for 3 months. The research is clear. Your roadmap is not.",
+    "choices": [
+      {
+        "text": "Pivot the roadmap immediately",
+        "effect": { "velocity": -5, "trust": 2, "sanity": 2 },
+        "consequence": "You course-correct. The team questions every decision made since founding."
+      },
+      {
+        "text": "Request more research first",
+        "effect": { "velocity": -1, "sanity": 1 },
+        "consequence": "More research ordered. The quarter ticks by. Data is coming."
+      },
+      {
+        "text": "Ship it anyway — sunk cost",
+        "effect": { "velocity": 3, "trust": -2, "sanity": -2 },
+        "consequence": "Feature ships. Users continue to ignore it. The research was right."
+      }
+    ]
+  },
+  {
+    "id": "design-dev-conflict",
+    "phase": "afternoon",
+    "day": "any",
+    "title": "The Estimate War",
+    "flavor": "3:45 PM. Slack is on fire.",
+    "description": "Designer says the new component takes 3 days. Developer says 2 weeks. Both are pinging you simultaneously. The sprint plan is a work of fiction.",
+    "choices": [
+      {
+        "text": "Mediate a joint session",
+        "effect": { "energy": -2, "trust": 2, "velocity": 1 },
+        "consequence": "You discover they're both right for completely different reasons. Progress."
+      },
+      {
+        "text": "Trust the developer's estimate",
+        "effect": { "sanity": 1, "trust": -1, "velocity": -1 },
+        "consequence": "The designer is offended. The feature ships in 2 weeks. As predicted."
+      },
+      {
+        "text": "Tell them to figure it out",
+        "effect": { "energy": 1, "trust": -2, "sanity": -1 },
+        "consequence": "They do not figure it out. They each file separate Slack complaints."
+      }
+    ]
+  },
+  {
+    "id": "competitor-feature",
+    "phase": "afternoon",
+    "day": "any",
+    "title": "They Shipped It First",
+    "flavor": "4:10 PM. TechCrunch has the article.",
+    "description": "A competitor just launched your exact feature. Same name. Same positioning. Two days before your planned launch.",
+    "choices": [
+      {
+        "text": "Differentiate quickly — pivot messaging",
+        "effect": { "velocity": 2, "sanity": -1, "trust": 1 },
+        "consequence": "You find a genuine angle. Turns out yours is actually better. Barely."
+      },
+      {
+        "text": "Brief the team honestly",
+        "effect": { "trust": 2, "sanity": 1, "velocity": -2 },
+        "consequence": "Team respects your transparency. Also now mildly demoralized."
+      },
+      {
+        "text": "Pretend you didn't see it",
+        "effect": { "sanity": -3, "velocity": 1 },
+        "consequence": "You saw it. Everyone saw it. It's in the #general channel. You saw it."
+      }
+    ]
+  },
+  {
+    "id": "analytics-zero",
+    "phase": "afternoon",
+    "day": "any",
+    "title": "Zero Users",
+    "flavor": "4:33 PM. The dashboard says 0.",
+    "description": "You launched yesterday. The analytics dashboard shows 0 active users. 0 events. 0 page views. Either no one came, or the tracking is broken. You genuinely cannot tell which.",
+    "choices": [
+      {
+        "text": "Investigate with the data team",
+        "effect": { "velocity": -2, "trust": 1, "sanity": 1 },
+        "consequence": "Tracking was broken. You had 400 users. They were just invisible."
+      },
+      {
+        "text": "Blame the analytics tool",
+        "effect": { "trust": -1, "energy": 1, "sanity": 1 },
+        "item": "rubber-duck",
+        "consequence": "Correct. But you still don't know your real numbers."
+      },
+      {
+        "text": "Tweet about it for transparency",
+        "effect": { "sanity": -2, "trust": -1 },
+        "consequence": "Investors see the tweet. That was a Thursday. It is now a difficult Friday."
+      }
+    ]
+  },
+  {
+    "id": "after-hours-ping",
+    "phase": "evening",
+    "day": "any",
+    "title": "The 9 PM Ping",
+    "flavor": "9:07 PM. Slack notification. 'Quick question...'",
+    "description": "A senior stakeholder messages you after hours: 'Quick question — when do we think the dashboard feature lands? Just want to set expectations.' It is never a quick question.",
+    "choices": [
+      {
+        "text": "Respond immediately with full update",
+        "effect": { "energy": -2, "trust": 2 },
+        "consequence": "They reply with 4 more questions. It is now 10:30 PM."
+      },
+      {
+        "text": "Set Do Not Disturb, ignore it",
+        "effect": { "energy": 2, "sanity": 1, "trust": -1 },
+        "consequence": "Your boundary is respected. Tomorrow will be interesting."
+      },
+      {
+        "text": "Reply: 'Let's sync tomorrow morning'",
+        "effect": { "energy": 1, "sanity": 1, "trust": 1 },
+        "consequence": "Professional. Aspirational. You set the sync for 9 AM and it gets cancelled."
+      }
+    ]
+  },
+  {
+    "id": "sprint-planning-prep",
+    "phase": "evening",
+    "day": "any",
+    "title": "Sprint Planning Tomorrow",
+    "flavor": "8:45 PM. The planning doc is blank.",
+    "description": "Sprint planning is tomorrow at 9 AM. You have: 0 user stories written, a vague memory of last quarter's OKRs, and a team expecting direction.",
+    "choices": [
+      {
+        "text": "Stay late and prepare properly",
+        "effect": { "energy": -3, "velocity": 3, "trust": 1 },
+        "consequence": "The planning is crisp. Efficient. The team is impressed. You are exhausted."
+      },
+      {
+        "text": "Wing it with last sprint's template",
+        "effect": { "energy": 1, "velocity": -2, "trust": -1 },
+        "consequence": "Engineers notice. They say nothing. They write it in the retro doc."
+      },
+      {
+        "text": "Ask the team to self-organize",
+        "effect": { "sanity": 2, "energy": 2, "trust": -1 },
+        "consequence": "They do. But they planned 3 months of work into a 2-week sprint."
+      }
+    ]
+  },
+  {
+    "id": "heated-retro",
+    "phase": "evening",
+    "day": "any",
+    "title": "The Retro Gets Real",
+    "flavor": "5:15 PM. Someone typed something in the retro board.",
+    "description": "'We keep saying we'll improve communication but nothing changes.' The room goes quiet. Then everyone starts talking at once. The Miro board has 47 sticky notes.",
+    "choices": [
+      {
+        "text": "Facilitate firmly, find action items",
+        "effect": { "trust": 2, "sanity": 1, "energy": -1 },
+        "consequence": "Two real commitments emerge. The team feels heard. Small miracle."
+      },
+      {
+        "text": "Let the team vent fully",
+        "effect": { "energy": -2, "trust": 1, "sanity": -1 },
+        "consequence": "Everyone feels better. Nothing is resolved. But feelings were felt."
+      },
+      {
+        "text": "Add it to the parking lot",
+        "effect": { "energy": 1, "sanity": -2, "trust": -1 },
+        "consequence": "The parking lot has 47 items. Nothing has ever left the parking lot."
+      }
+    ]
+  },
+  {
+    "id": "okr-deadline",
+    "phase": "evening",
+    "day": "any",
+    "title": "OKR Deadline Day",
+    "flavor": "6:00 PM. Calendar invite: 'OKRs Due EOD'.",
+    "description": "Company OKRs were due today. You have contributed approximately nothing. The shared spreadsheet has your name in a row. It is red.",
+    "choices": [
+      {
+        "text": "Rush through them now",
+        "effect": { "sanity": -2, "energy": -2, "trust": 2 },
+        "item": "okr-doc",
+        "consequence": "Done! They're ambitious, vague, and unmeasurable. Perfect OKRs."
+      },
+      {
+        "text": "Copy from last quarter",
+        "effect": { "energy": 1, "trust": -1, "sanity": -1 },
+        "consequence": "Nobody notices. One of last quarter's OKRs was 'launch the thing'. It shipped."
+      },
+      {
+        "text": "Be honest: ask for 2 more days",
+        "effect": { "sanity": 2, "trust": -1, "energy": 2 },
+        "consequence": "Extension granted. Your OKRs will be thoughtful. And 2 days late."
+      }
+    ]
+  },
+  {
+    "id": "big-demo-day",
+    "phase": "morning",
+    "day": 5,
+    "title": "The Big Demo — Day 5",
+    "flavor": "8:00 AM. All hands in 15 minutes.",
+    "description": "Quarterly all-hands demo starts in 15 minutes. Jenkins just pushed to main. Production is giving mixed signals. Investors are in the virtual waiting room.",
+    "choices": [
+      {
+        "text": "Demo from staging — safe play",
+        "effect": { "sanity": 2, "trust": 2 },
+        "consequence": "Demo goes flawlessly. Investors clap. Jenkins is confused but okay."
+      },
+      {
+        "text": "Cancel and reschedule the demo",
+        "effect": { "trust": -3, "sanity": 3, "energy": 3 },
+        "consequence": "Safe. But you'll be explaining this to the board for a month."
+      },
+      {
+        "text": "Demo live with the bugs",
+        "effect": { "trust": -2, "sanity": -2, "velocity": 5 },
+        "consequence": "Two bugs surface live. You call them 'features in review'. Some believe you."
+      }
+    ]
+  },
+  {
+    "id": "simple-feature-estimate",
+    "phase": "afternoon",
+    "day": 5,
+    "title": "The 'Simple' Feature",
+    "flavor": "1:30 PM. The engineering lead requests a word.",
+    "description": "The feature you told the board would ship 'by end of quarter' just got re-estimated at 3 weeks. The quarter ends in 6 days. Your lead dev looks sympathetic.",
+    "choices": [
+      {
+        "text": "Cover it, buy time diplomatically",
+        "effect": { "trust": 1, "sanity": -2, "velocity": -2 },
+        "consequence": "You buy 2 weeks. You have resolved nothing. The clock resets."
+      },
+      {
+        "text": "Be fully honest with stakeholders",
+        "effect": { "sanity": 2, "trust": -2, "energy": -1 },
+        "consequence": "Stakeholders are upset. Team respects you deeply. This is the right call."
+      },
+      {
+        "text": "Ship a partial MVP, call it v1",
+        "effect": { "velocity": 3, "trust": 1, "sanity": 1 },
+        "consequence": "v1 lands. It's 40% of the feature. Users don't know what they're missing."
+      }
+    ]
+  }
+]

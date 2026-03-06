@@ -1,0 +1,123 @@
+{
+  "roles": [
+    {
+      "id": "ai-pm",
+      "name": "AI PM",
+      "title": "Product Manager",
+      "description": "The generalist. You ship, you align, you survive. Base stats.",
+      "unlockCondition": "default",
+      "startingBonusStats": {}
+    },
+    {
+      "id": "ai-tpm",
+      "name": "AI TPM",
+      "title": "Technical PM",
+      "description": "Closer to the model. Stronger delivery, less political runway. Unlocked after your first win.",
+      "unlockCondition": "total_wins_1",
+      "startingBonusStats": { "deliverySpeed": 8, "stakeholderTrust": -1 }
+    },
+    {
+      "id": "ai-program-lead",
+      "name": "AI Program Lead",
+      "title": "Program Lead",
+      "description": "Strategic, cross-functional, accountable for everything. Higher trust floor, slower delivery. Unlocked after 5 wins.",
+      "unlockCondition": "total_wins_5",
+      "startingBonusStats": { "stakeholderTrust": 2, "teamHealth": 1, "deliverySpeed": -8, "riskCompliance": -1 }
+    }
+  ],
+  "difficulties": [
+    {
+      "id": "normal",
+      "name": "Normal",
+      "description": "Standard AI PM experience. Painful but fair.",
+      "unlockCondition": "default",
+      "modifiers": {}
+    },
+    {
+      "id": "understaffed",
+      "name": "Understaffed",
+      "description": "Team starts depleted. Two engineers are on PTO.",
+      "unlockCondition": "total_wins_1",
+      "modifiers": { "teamHealthStart": 5 }
+    },
+    {
+      "id": "skeptical-board",
+      "name": "Skeptical Board",
+      "description": "Trust starts low. The board has questions from last quarter.",
+      "unlockCondition": "total_wins_1",
+      "modifiers": { "stakeholderTrustStart": 4 }
+    },
+    {
+      "id": "high-stakes",
+      "name": "High Stakes",
+      "description": "Start with a Tech Debt Bomb in your hotbar. Good luck.",
+      "unlockCondition": "total_wins_2",
+      "modifiers": { "startingItem": "tech-debt-bomb" }
+    },
+    {
+      "id": "strict-compliance",
+      "name": "Strict Compliance",
+      "description": "Risk/Compliance game-over threshold reduced to 8 instead of 10.",
+      "unlockCondition": "total_wins_2",
+      "modifiers": { "riskGameOverThreshold": 8 }
+    },
+    {
+      "id": "lean-inventory",
+      "name": "Lean Inventory",
+      "description": "Hotbar capped at 5 slots. Every item slot counts.",
+      "unlockCondition": "total_wins_3",
+      "modifiers": { "hotbarSize": 5 }
+    },
+    {
+      "id": "speed-chess",
+      "name": "Speed Chess",
+      "description": "Delivery Speed starts at 25. The sprint is already behind.",
+      "unlockCondition": "total_wins_3",
+      "modifiers": { "deliverySpeedStart": 25 }
+    },
+    {
+      "id": "chaos",
+      "name": "Chaos Mode",
+      "description": "All stat deltas are amplified by 1.5×. Big swings, both ways.",
+      "unlockCondition": "total_wins_5",
+      "modifiers": { "deltaMultiplier": 1.5 }
+    },
+    {
+      "id": "iron-pm",
+      "name": "Iron PM",
+      "description": "No items can be activated. You are the item.",
+      "unlockCondition": "achievement_triple-boss",
+      "modifiers": { "noItems": true }
+    }
+  ],
+  "locations": [
+    { "id": "standup-room",  "name": "Standup Room",  "description": "The daily grind. Where velocity goes to die.",                         "unlockCondition": "default" },
+    { "id": "war-room",      "name": "War Room",      "description": "Incidents only. Someone set up a secondary Slack channel.",              "unlockCondition": "total_wins_1" },
+    { "id": "client-call",   "name": "Client Call",   "description": "Enterprise prospect on the line. Every word is being recorded.",        "unlockCondition": "achievement_security-cleared" },
+    { "id": "demo-stage",    "name": "Demo Stage",    "description": "Lights up. Mic on. No second takes.",                                    "unlockCondition": "achievement_demo-day-champion" }
+  ],
+  "levelUnlocks": {
+    "11": "Boss encounters now trigger — Demo Day (Day 4), Model Incident (Day 5), Procurement (Day 3)",
+    "12": "War Room location unlocked",
+    "13": "Understaffed + Skeptical Board difficulties unlocked",
+    "14": "High Stakes difficulty unlocked",
+    "15": "Strict Compliance difficulty unlocked",
+    "16": "AI TPM role eligible (requires 1 win to activate)",
+    "17": "Lean Inventory + Speed Chess difficulties unlocked",
+    "18": "Client Call location unlocked",
+    "19": "AI Program Lead role eligible (requires 5 wins)",
+    "20": "Chaos Mode + Iron PM unlocked · Demo Stage location · LEGENDARY STATUS"
+  },
+  "dailyModifiers": [
+    { "id": "mod-all-hands",        "title": "All-Hands Day",             "description": "CEO is presenting the company vision. All other meetings cancelled. So is productivity.",             "statDelta": { "stakeholderTrust": 1, "deliverySpeed": -8 } },
+    { "id": "mod-sprint-planning",  "title": "Sprint Planning Day",       "description": "Estimates are due. Estimates are wrong. This is known and accepted.",                               "statDelta": { "deliverySpeed": -6, "teamHealth": -1 } },
+    { "id": "mod-late-deploy",      "title": "Prod Deploy Last Night",    "description": "Someone pushed to prod at 11 PM. The on-call engineer is technically fine.",                         "statDelta": { "teamHealth": -2, "modelQuality": 1 } },
+    { "id": "mod-good-evals",       "title": "Evals Came Back Clean",     "description": "For once, the numbers are good. Enjoy it. Something else will break.",                              "statDelta": { "modelQuality": 2, "stakeholderTrust": 1 } },
+    { "id": "mod-qbr",              "title": "Quarterly Business Review", "description": "Leadership wants a progress update on every initiative. In a slide deck. Due by noon.",             "statDelta": { "stakeholderTrust": 1, "deliverySpeed": -10, "teamHealth": -1 } },
+    { "id": "mod-aws-outage",       "title": "Cloud Provider Incident",   "description": "AWS is having elevated error rates in your region. Staging is down. Production is fine. For now.",  "statDelta": { "deliverySpeed": -12, "teamHealth": -1 } },
+    { "id": "mod-new-hire",         "title": "New Engineer Onboarding",   "description": "A senior engineer joins today. They will reveal how many things have no documentation.",             "statDelta": { "teamHealth": 1, "deliverySpeed": -4 } },
+    { "id": "mod-competitor",       "title": "Competitor Just Launched",  "description": "A competitor released something. It is trending. The CEO forwarded the article with '?'.",           "statDelta": { "stakeholderTrust": -2, "riskCompliance": 1 } },
+    { "id": "mod-offsite-energy",   "title": "Post-Offsite Energy",       "description": "Yesterday was the team offsite. Morale is high. So is the action item count.",                      "statDelta": { "teamHealth": 3, "deliverySpeed": -3 } },
+    { "id": "mod-budget-freeze",    "title": "Budget Freeze Announced",   "description": "Finance sent an email. New tooling requests are paused. Existing licenses under review.",            "statDelta": { "deliverySpeed": -5, "teamHealth": -1, "riskCompliance": 1 } }
+  ]
+}

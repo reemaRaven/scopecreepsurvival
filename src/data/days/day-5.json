@@ -1,0 +1,281 @@
+{
+  "id": "day-5",
+  "dayNumber": 5,
+  "brief": "Friday. The last day of the sprint. Everything you've done this week resolves today. The model either ships or it doesn't. The team either trusts you or they don't. The board is watching the metrics.",
+  "modifier": {
+    "id": "mod-final-sprint",
+    "title": "Final Sprint Day",
+    "description": "All stat changes are amplified. The pressure is real. Everything counts more today.",
+    "statDelta": {
+      "deliverySpeed": 5,
+      "teamHealth": -1
+    }
+  },
+  "phases": [
+    {
+      "id": "day-5-morning",
+      "phase": "morning",
+      "scenario": {
+        "id": "s-standup-day5",
+        "type": "standup",
+        "title": "The Last Standup",
+        "flavor": "9:00 AM. Everyone knows this is the final one. The energy is different.",
+        "description": "Final sprint standup. The team is tired. The burndown has a chance of completing if everything goes right today. Jenkins has a new theory about the eval issue. Two engineers have 'almost done' tickets. 'Almost done' is not 'done'.",
+        "choices": [
+          {
+            "id": "c-standup5-motivate",
+            "text": "Start with appreciation. Acknowledge what the team built this week.",
+            "consequence": "Genuine moment. Three engineers say this standup felt different. Tickets close 20% faster after lunch. Sometimes the human stuff is the engineering stuff.",
+            "statDelta": { "teamHealth": 3, "deliverySpeed": 5, "stakeholderTrust": 1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-sprint-close-d5"
+          },
+          {
+            "id": "c-standup5-focus",
+            "text": "Skip ceremony. Focus only on what needs to ship today.",
+            "consequence": "Efficient. Some engineers appreciate it. One engineer who had something to share says nothing. The something might have been important. You don't know.",
+            "statDelta": { "deliverySpeed": 8, "teamHealth": -1 },
+            "itemGained": "jira-ticket",
+            "itemConsumed": null,
+            "questProgress": "q-sprint-close-d5"
+          },
+          {
+            "id": "c-standup5-jenkins",
+            "text": "Let Jenkins share the eval theory. It might matter.",
+            "consequence": "Jenkins' theory is correct. The fix takes 3 hours but closes 3 eval points. The standup runs 40 minutes. The trade was worth it.",
+            "statDelta": { "modelQuality": 3, "deliverySpeed": -5, "teamHealth": 1 },
+            "itemGained": "prompt-template",
+            "itemConsumed": null,
+            "questProgress": "q-model-final-d5"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-friday-energy",
+          "type": "random",
+          "rarity": 1,
+          "title": "Someone Brings Donuts",
+          "description": "An engineer brings donuts to the office. Nobody asked. Everyone is grateful. Morale increases in a way that no OKR can capture.",
+          "statDelta": { "teamHealth": 1 },
+          "itemDropped": "coffee",
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-early-win",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "Two Tickets Closed Before 10 AM",
+          "description": "Two engineers independently ship their tickets before standup ends. The burndown chart updates in real time. The team briefly cheers. This is why you do this.",
+          "statDelta": { "teamHealth": 2, "deliverySpeed": 8, "modelQuality": 1 },
+          "itemDropped": null,
+          "questUnlocked": "q-sprint-close-d5"
+        }
+      }
+    },
+    {
+      "id": "day-5-midday",
+      "phase": "midday",
+      "scenario": {
+        "id": "s-final-evals-day5",
+        "type": "model-evals",
+        "title": "Final Go / No-Go on Model Quality",
+        "flavor": "11:30 AM. The eval pipeline finished. This is the number that decides everything.",
+        "description": "Final eval run is in. You're 2.1 points below the committed baseline. Legal needs to sign off on the quality number. The VP needs a recommendation by noon. The team is waiting. You have three options and 30 minutes to decide.",
+        "choices": [
+          {
+            "id": "c-finalevals-ship",
+            "text": "Recommend shipping. 2.1 points is acceptable risk.",
+            "consequence": "VP agrees. Legal documents concern but approves. The model ships. The 2.1-point gap will be closed in the next sprint. Or it will become the new baseline. You're aware of both possibilities.",
+            "statDelta": { "stakeholderTrust": 2, "modelQuality": -1, "deliverySpeed": 10, "riskCompliance": 2 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-sprint-close-d5"
+          },
+          {
+            "id": "c-finalevals-hotfix",
+            "text": "Last-minute hotfix: Jenkins' patch closes 1.5 points in 2 hours.",
+            "consequence": "The fix works. Final gap: 0.6 points. Legal approves. VP is impressed. The team shipped a meaningful quality improvement in the final sprint hours. This will be in the retro highlights.",
+            "statDelta": { "modelQuality": 2, "deliverySpeed": 5, "teamHealth": -1, "riskCompliance": -1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-model-final-d5"
+          },
+          {
+            "id": "c-finalevals-nogo",
+            "text": "Recommend no-go. Protect model quality above all.",
+            "consequence": "The model doesn't ship this sprint. Team quality standards are clear. Stakeholders are frustrated. Legal is relieved. Users will get a better product in two weeks. The sprint velocity number is not your best ever.",
+            "statDelta": { "modelQuality": 3, "deliverySpeed": -10, "stakeholderTrust": -2, "riskCompliance": -3 },
+            "itemGained": "dpa-doc",
+            "itemConsumed": null,
+            "questProgress": "q-model-final-d5"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-final-eval-noise",
+          "type": "random",
+          "rarity": 1,
+          "title": "Eval Variance Reminder: These Numbers Are Estimates",
+          "description": "The eval tooling adds a confidence interval note: ±1.8 points. The 2.1-point gap you're trying to close might already be within noise. Or it might be 3.9 points. The numbers are a story we tell ourselves.",
+          "statDelta": { "riskCompliance": -1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-perfect-evals",
+          "type": "rare",
+          "rarity": 0.1,
+          "title": "Evals Beat Baseline",
+          "description": "Final eval run shows +0.8 above baseline. Jenkins' fix from this morning made the difference. The team goes momentarily silent, then someone says 'wait, are these right?' They are right.",
+          "statDelta": { "modelQuality": 4, "teamHealth": 2, "stakeholderTrust": 1 },
+          "itemDropped": "okr-doc",
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-5-afternoon",
+      "phase": "afternoon",
+      "scenario": {
+        "id": "s-final-backlog-day5",
+        "type": "backlog",
+        "title": "The Last Call on Scope",
+        "flavor": "3:00 PM. Two hours until sprint close. The backlog wants one more thing.",
+        "description": "Three tickets remain open. Two are close to done. One is blocked on an external API that's been flaky all week. Marketing has sent one final request: a 'tiny' analytics event for the AI output. The sprint closes in 2 hours.",
+        "choices": [
+          {
+            "id": "c-final-protect",
+            "text": "Protect the close. Ship the two nearly-done tickets only.",
+            "consequence": "Sprint closes with 2 final tickets shipped. The external API blocker is documented for next sprint. Marketing's request is formally added to the backlog with a comment. The sprint goal is met.",
+            "statDelta": { "deliverySpeed": 8, "stakeholderTrust": 1, "teamHealth": 1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-sprint-close-d5"
+          },
+          {
+            "id": "c-final-push",
+            "text": "Push for all three. Sprint close is flexible.",
+            "consequence": "The team pushes. Two tickets ship. The third is 'almost done' at 5:01 PM. Sprint officially closes with an asterisk. The PM velocity metric will be measured at 80% completion. Everyone knows what happened.",
+            "statDelta": { "deliverySpeed": 5, "teamHealth": -2, "stakeholderTrust": 0 },
+            "itemGained": "jira-ticket",
+            "itemConsumed": null,
+            "questProgress": null,
+            "scopeCreep": true
+          },
+          {
+            "id": "c-final-marketing",
+            "text": "Add Marketing's event first. It's 30 minutes.",
+            "consequence": "The event is added in 45 minutes (it was not 30 minutes). One of the 'nearly done' tickets is now in the next sprint. Marketing is happy. Engineering is quiet.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": -1, "deliverySpeed": 3 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          }
+        ],
+        "randomEvent": {
+          "id": "e-blocker-clears",
+          "type": "random",
+          "rarity": 1,
+          "title": "The External API Becomes Stable",
+          "description": "At 3:47 PM, the external API starts responding normally. The blocked engineer gets back to work. Whether this is luck or their fix finally propagating is unclear. Does not matter.",
+          "statDelta": { "deliverySpeed": 5 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-sprint-complete",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "All Three Tickets Ship",
+          "description": "The team rallies. All three tickets are merged by 4:30 PM. The sprint burndown reaches zero for the first time in memory. Someone takes a screenshot of the empty backlog column.",
+          "statDelta": { "deliverySpeed": 10, "teamHealth": 2, "stakeholderTrust": 2 },
+          "itemDropped": null,
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-5-evening",
+      "phase": "evening",
+      "scenario": {
+        "id": "s-final-verdict-day5",
+        "type": "leadership-update",
+        "title": "The Sprint Verdict",
+        "flavor": "5:30 PM. The sprint is closed. The exec team wants the final word.",
+        "description": "End-of-sprint leadership review. The exec team sees the metrics. Delivery speed, model quality, trust, compliance — all visible. One exec says: 'Walk us through what happened this week.' This is the moment everything was building toward.",
+        "choices": [
+          {
+            "id": "c-verdict-narrative",
+            "text": "Tell the real story — decisions made, tradeoffs taken, lessons learned.",
+            "consequence": "Twenty minutes of genuine PM storytelling. Execs are quiet. At the end, the VP says: 'This is exactly the kind of thinking we need at this company.' You feel, briefly, like everything was worth it.",
+            "statDelta": { "stakeholderTrust": 3, "teamHealth": 2, "deliverySpeed": 3 },
+            "itemGained": "okr-doc",
+            "itemConsumed": null,
+            "questProgress": "q-sprint-close-d5"
+          },
+          {
+            "id": "c-verdict-metrics",
+            "text": "Lead with the numbers. Let the data speak.",
+            "consequence": "Clean, professional, defensible. The numbers tell a mixed story. The execs appreciate the precision. One asks about the human side. You answer well.",
+            "statDelta": { "stakeholderTrust": 2, "deliverySpeed": 2, "riskCompliance": -1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-sprint-close-d5"
+          },
+          {
+            "id": "c-verdict-team",
+            "text": "Credit the team publicly. Spotlight what they shipped.",
+            "consequence": "Execs are moved. The team — listening in — feels seen. This sprint will be remembered positively regardless of the metrics, because of how you led it.",
+            "statDelta": { "stakeholderTrust": 2, "teamHealth": 3, "modelQuality": 1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-sprint-close-d5"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-friday-five",
+          "type": "random",
+          "rarity": 1,
+          "title": "The Team Signs Off at 5:00 PM Sharp",
+          "description": "Engineers close their laptops at exactly 5:00 PM. Simultaneously. In solidarity. It is the most coordinated thing the team has done all week. It is earned.",
+          "statDelta": { "teamHealth": 1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-perfect-sprint",
+          "type": "rare",
+          "rarity": 0.1,
+          "title": "The VP Says 'Best Sprint We've Had'",
+          "description": "The VP, unprompted, says this was the best sprint the product team has run. They want to document how you ran it. For the first time all week, you genuinely smile.",
+          "statDelta": { "stakeholderTrust": 4, "teamHealth": 3, "deliverySpeed": 5 },
+          "itemDropped": "okr-doc",
+          "questUnlocked": null
+        }
+      }
+    }
+  ],
+  "quests": [
+    {
+      "id": "q-sprint-close-d5",
+      "title": "Close the Sprint With Integrity",
+      "description": "Make 3 decisions today that reflect the PM you've been building toward all week.",
+      "type": "sprint",
+      "steps": 3,
+      "reward": { "statDelta": { "stakeholderTrust": 3, "teamHealth": 2, "deliverySpeed": 5 }, "itemId": "okr-doc", "xp": 100 },
+      "failPenalty": { "stakeholderTrust": -2, "deliverySpeed": -5 },
+      "expiresDay": 5,
+      "hidden": false
+    },
+    {
+      "id": "q-model-final-d5",
+      "title": "Ship With Confidence",
+      "description": "Resolve the model quality question definitively — ship, fix, or hold.",
+      "type": "daily",
+      "steps": 1,
+      "reward": { "statDelta": { "modelQuality": 2, "riskCompliance": -2 }, "itemId": null, "xp": 60 },
+      "failPenalty": { "riskCompliance": 3 },
+      "expiresDay": 5,
+      "hidden": false
+    }
+  ]
+}

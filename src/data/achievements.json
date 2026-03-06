@@ -1,0 +1,22 @@
+[
+  { "id": "first-blood",            "title": "Clocked In",             "description": "Complete your first run, whatever the outcome.",                             "icon": "📋" },
+  { "id": "first-win",              "title": "Shipped",                "description": "Win your first run. The sprint is closed.",                               "icon": "🚀" },
+  { "id": "legendary-pm",          "title": "Legendary PM",           "description": "Win with a Legendary grade.",                                             "icon": "⭐" },
+  { "id": "safety-first",          "title": "Safety First",           "description": "Win with Risk/Compliance at 1 or below.",                                 "icon": "🛡️" },
+  { "id": "speed-demon",           "title": "Speed Demon",            "description": "Win with Delivery Speed at 90 or above.",                                 "icon": "⚡" },
+  { "id": "team-player",           "title": "Team Player",            "description": "Win with Team Health at 9 or above.",                                     "icon": "❤️" },
+  { "id": "trust-builder",         "title": "Trust Builder",          "description": "Win with Stakeholder Trust at 9 or above.",                               "icon": "🤝" },
+  { "id": "quality-obsessed",      "title": "Quality Obsessed",       "description": "Win with Model Quality at 9 or above.",                                   "icon": "🎯" },
+  { "id": "balanced-pm",           "title": "Balanced Portfolio",     "description": "Win with all 4 positive stats at 6 or above.",                            "icon": "⚖️" },
+  { "id": "comeback-kid",          "title": "Comeback Kid",           "description": "Win after having 2 or more stats critical simultaneously.",                "icon": "💪" },
+  { "id": "scope-creep-survivor",  "title": "Scope Creep Survivor",   "description": "Trigger the scope overflow event and still win.",                         "icon": "📈" },
+  { "id": "tech-debt-defused",     "title": "Tech Debt Defused",      "description": "Let the Tech Debt Bomb explode and still win.",                           "icon": "💣" },
+  { "id": "boss-slayer",           "title": "Boss Slayer",            "description": "Defeat at least one boss encounter.",                                      "icon": "⚔️" },
+  { "id": "demo-day-champion",     "title": "Demo Day Champion",      "description": "Win the Demo Day boss encounter.",                                         "icon": "🎤" },
+  { "id": "incident-commander",    "title": "Incident Commander",     "description": "Win the Model Incident boss encounter.",                                   "icon": "🚨" },
+  { "id": "security-cleared",      "title": "Security Cleared",       "description": "Pass the Enterprise Procurement & Security Review.",                       "icon": "🔐" },
+  { "id": "triple-boss",           "title": "Triple Threat",          "description": "Defeat all 3 boss encounters in a single run.",                           "icon": "👑" },
+  { "id": "level-10",              "title": "Max Level",              "description": "Reach level 10 in a single run.",                                          "icon": "🔥" },
+  { "id": "veteran",               "title": "Veteran PM",             "description": "Complete 10 total runs.",                                                  "icon": "🎖️" },
+  { "id": "no-scope-creep",        "title": "Scope Defender",         "description": "Win a run without ever choosing a scope-creep option.",                    "icon": "🧱" }
+]

@@ -1,0 +1,404 @@
+{
+  "id": "day-1",
+  "dayNumber": 1,
+  "brief": "Monday. Your OKRs are 'aspirational'. The model eval results from Friday are unread. The backlog has 247 tickets. Coffee: not yet consumed. Godspeed.",
+  "modifier": {
+    "id": "mod-monday-dread",
+    "title": "Monday Morning Energy",
+    "description": "It's the start of the week. Everyone is technically rested but spiritually tired.",
+    "statDelta": {
+      "teamHealth": -1,
+      "deliverySpeed": -5
+    }
+  },
+  "phases": [
+    {
+      "id": "day-1-morning",
+      "phase": "morning",
+      "scenario": {
+        "id": "s-standup-day1",
+        "type": "standup",
+        "title": "The Standup That Would Not End",
+        "flavor": "9:02 AM. Jenkins is screen-sharing. There is no end in sight.",
+        "description": "Daily standup is 43 minutes in. Jenkins is live-debugging the eval pipeline on the call. Three engineers are on mute. Someone has definitely started cooking breakfast. The sprint goal has not been mentioned once.",
+        "choices": [
+          {
+            "id": "c-standup-cut",
+            "text": "Cut it off. 'Let's take this async, folks.'",
+            "consequence": "Two engineers DM you 'thank you' immediately. Jenkins files a Jira ticket titled 'PM communication issues'. It is assigned to you.",
+            "statDelta": {
+              "teamHealth": 1,
+              "deliverySpeed": 8,
+              "stakeholderTrust": 0
+            },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-sprint-goal-d1"
+          },
+          {
+            "id": "c-standup-let",
+            "text": "Let it run. The team needs space to think out loud.",
+            "consequence": "The issue is fully resolved on the call. Genuine bonding occurs. You have lost 50 minutes and the calendar gods are weeping.",
+            "statDelta": {
+              "teamHealth": 2,
+              "modelQuality": 1,
+              "deliverySpeed": -8
+            },
+            "itemGained": "rubber-duck",
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-standup-notes",
+            "text": "Take furious notes and schedule a follow-up.",
+            "consequence": "You now own a follow-up meeting that nobody will attend. You gain one JIRA ticket, one action item, and a mild sense of dread.",
+            "statDelta": {
+              "stakeholderTrust": 1,
+              "teamHealth": 0,
+              "deliverySpeed": -5
+            },
+            "itemGained": "jira-ticket",
+            "itemConsumed": null,
+            "questProgress": "q-backlog-triage-d1"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-coffee-machine-broken",
+          "type": "random",
+          "rarity": 1,
+          "title": "The Office Coffee Machine Is Down",
+          "description": "Facilities sent an email at 7:43 AM. The espresso machine is broken until Wednesday. A dark omen for all.",
+          "statDelta": {
+            "teamHealth": -1,
+            "deliverySpeed": -3
+          },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-ceo-standup-cameo",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "CEO Joins the Standup 'Just to Listen'",
+          "description": "The CEO hops in unannounced. Everyone immediately becomes 40% more articulate. Jenkins stops debugging and begins presenting.",
+          "statDelta": {
+            "stakeholderTrust": 2,
+            "teamHealth": -1,
+            "deliverySpeed": 3
+          },
+          "itemDropped": "okr-doc",
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-1-midday",
+      "phase": "midday",
+      "scenario": {
+        "id": "s-backlog-chaos-day1",
+        "type": "backlog",
+        "title": "The Backlog Has Achieved Sentience",
+        "flavor": "11:30 AM. 247 tickets. 19 labeled P0. Legal added 3 at midnight.",
+        "description": "You open the sprint planning doc. Every team has marked their items critical. Marketing wants 'one small banner'. Legal added compliance tickets at midnight with no context. The CEO forwarded a competitor feature with a single comment: '?'. The backlog is a cry for help in Jira format.",
+        "choices": [
+          {
+            "id": "c-backlog-cut",
+            "text": "Ruthlessly cut. Lock the sprint goal.",
+            "consequence": "Three teams are quietly furious. Engineering is visibly relieved. The sprint is achievable and everyone knows it, though nobody says thank you.",
+            "statDelta": {
+              "stakeholderTrust": -2,
+              "teamHealth": 2,
+              "modelQuality": 1,
+              "deliverySpeed": 10
+            },
+            "itemGained": "roadmap",
+            "itemConsumed": null,
+            "questProgress": "q-sprint-goal-d1"
+          },
+          {
+            "id": "c-backlog-yes-all",
+            "text": "Accept everything. We'll heroically figure it out.",
+            "consequence": "Everyone is happy. Velocity is now fictional. The team knows this. You know this. Nobody says anything. A Tech Debt Bomb quietly materializes.",
+            "statDelta": {
+              "stakeholderTrust": 2,
+              "teamHealth": -2,
+              "modelQuality": -1,
+              "deliverySpeed": -12,
+              "riskCompliance": 1
+            },
+            "itemGained": "tech-debt-bomb",
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-backlog-negotiate",
+            "text": "Negotiate priorities with each team lead (1:1s).",
+            "consequence": "Four 30-minute meetings are scheduled. The backlog is 20% cleaner. You have traded your entire afternoon for marginal clarity.",
+            "statDelta": {
+              "stakeholderTrust": 1,
+              "teamHealth": 1,
+              "deliverySpeed": -5
+            },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-backlog-triage-d1"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-slack-outage",
+          "type": "random",
+          "rarity": 1,
+          "title": "Slack Is Down for 23 Minutes",
+          "description": "All async communication ceases. Engineers discover talking. It is deeply uncomfortable for everyone. One engineer makes eye contact by accident.",
+          "statDelta": {
+            "teamHealth": 1,
+            "deliverySpeed": -5
+          },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-investor-visit",
+          "type": "rare",
+          "rarity": 0.15,
+          "title": "Series B Investor Drops In for a 'Casual Look'",
+          "description": "An investor wants to see your roadmap. Now. Your deck is from Q2 and references three features that no longer exist.",
+          "statDelta": {
+            "stakeholderTrust": -2,
+            "teamHealth": -1,
+            "deliverySpeed": -8
+          },
+          "itemDropped": "prompt-template",
+          "questUnlocked": "q-hidden-impress-investor"
+        }
+      }
+    },
+    {
+      "id": "day-1-afternoon",
+      "phase": "afternoon",
+      "scenario": {
+        "id": "s-model-evals-day1",
+        "type": "model-evals",
+        "title": "The Eval Results Are In",
+        "flavor": "2:15 PM. You opened the spreadsheet. There is a lot of red.",
+        "description": "Friday's model eval results are in your inbox. Accuracy is down 4.2 points vs. the baseline you committed to. The feature launches Thursday. Engineering says it's 'within acceptable variance'. Legal has requested the eval doc but hasn't commented yet. The VP of Product has seen the Slack thread.",
+        "choices": [
+          {
+            "id": "c-evals-delay",
+            "text": "Delay the launch. Fix the model first.",
+            "consequence": "Thursday becomes next sprint. Three stakeholders use the word 'disappointing' in Slack. The team is relieved. Legal is satisfied. Future users thank you without knowing it.",
+            "statDelta": {
+              "stakeholderTrust": -2,
+              "teamHealth": 1,
+              "modelQuality": 3,
+              "deliverySpeed": -10,
+              "riskCompliance": -2
+            },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-model-quality-d1"
+          },
+          {
+            "id": "c-evals-ship",
+            "text": "Ship it. 4.2 points is within variance.",
+            "consequence": "Feature ships Thursday. Users sense something is off. They can't articulate it. It is the 4.2 points. They file support tickets using the word 'weird'.",
+            "statDelta": {
+              "stakeholderTrust": 1,
+              "teamHealth": 0,
+              "modelQuality": -3,
+              "deliverySpeed": 8,
+              "riskCompliance": 3
+            },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-sprint-goal-d1"
+          },
+          {
+            "id": "c-evals-guardrails",
+            "text": "Ship with guardrails — add a feedback flag on affected outputs.",
+            "consequence": "Elegant. Legal is satisfied. Engineering spends 2 days on the flag. It ships slightly late and slightly better than it had any right to be.",
+            "statDelta": {
+              "stakeholderTrust": 1,
+              "teamHealth": -1,
+              "modelQuality": 1,
+              "deliverySpeed": -3,
+              "riskCompliance": -1
+            },
+            "itemGained": "dpa-doc",
+            "itemConsumed": null,
+            "questProgress": "q-model-quality-d1"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-competitor-benchmark",
+          "type": "random",
+          "rarity": 1,
+          "title": "Competitor Publishes a New Public Benchmark",
+          "description": "A competitor releases an eval framework that makes your numbers look even worse. It's trending on LinkedIn. Someone tagged your company account.",
+          "statDelta": {
+            "stakeholderTrust": -1,
+            "riskCompliance": 1
+          },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-researcher-breakthrough",
+          "type": "rare",
+          "rarity": 0.25,
+          "title": "Research Team Drops a Breakthrough Technique",
+          "description": "An internal researcher shares a prompt chaining approach that could close the eval gap — but needs 3 days of integration testing before it's safe to ship.",
+          "statDelta": {
+            "teamHealth": 1,
+            "modelQuality": 4,
+            "deliverySpeed": -6
+          },
+          "itemDropped": "prompt-template",
+          "questUnlocked": "q-model-quality-d1"
+        }
+      }
+    },
+    {
+      "id": "day-1-evening",
+      "phase": "evening",
+      "scenario": {
+        "id": "s-leadership-update-day1",
+        "type": "leadership-update",
+        "title": "The Weekly Leadership Sync",
+        "flavor": "5:30 PM. The VP is ready. The slides have three slides. None are current.",
+        "description": "Weekly leadership sync in 10 minutes. You have: eval concerns, a potentially slipping launch, backlog chaos from this morning, and a team running on no coffee. The VP asks point-blank: 'How are we tracking to the quarterly goal?'",
+        "choices": [
+          {
+            "id": "c-leadership-honest",
+            "text": "Be fully transparent — share the eval risk and timeline slip.",
+            "consequence": "The VP is quiet for 4 seconds. Then: 'I appreciate the honesty.' Your manager gives you a small nod. You have made an enemy of the optimism culture. It was the right call.",
+            "statDelta": {
+              "stakeholderTrust": -1,
+              "teamHealth": 2,
+              "riskCompliance": -2
+            },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-leadership-spin",
+            "text": "Positive framing — focus on what shipped, not what didn't.",
+            "consequence": "The VP is genuinely pleased. You have deferred three difficult conversations. They are now compounding interest in your future.",
+            "statDelta": {
+              "stakeholderTrust": 2,
+              "teamHealth": -1,
+              "deliverySpeed": 3,
+              "riskCompliance": 2
+            },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-leadership-plan",
+            "text": "Present risks AND a concrete mitigation plan.",
+            "consequence": "The VP nods. 'Let's sync on Wednesday to review the plan.' You now have 36 hours to make the plan real. This is, technically, progress.",
+            "statDelta": {
+              "stakeholderTrust": 1,
+              "teamHealth": 1,
+              "modelQuality": 1,
+              "riskCompliance": -1
+            },
+            "itemGained": "roadmap",
+            "itemConsumed": null,
+            "questProgress": "q-sprint-goal-d1"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-after-hours-ping",
+          "type": "random",
+          "rarity": 1,
+          "title": "'Quick Question' — 6:07 PM",
+          "description": "A senior stakeholder messages: 'Quick question — do you have 5 min?' It is never 5 minutes. It is never a quick question. You know this. They know this. The ritual continues.",
+          "statDelta": {
+            "stakeholderTrust": 1,
+            "teamHealth": -1
+          },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-ceo-slack-kudos",
+          "type": "rare",
+          "rarity": 0.1,
+          "title": "CEO Sends an Unprompted 'Great Work' in #general",
+          "description": "The CEO messages the entire company: 'Great work this week, team!' No specifics. No names. Everyone is suspicious. Nobody knows what triggered it. Morale briefly increases.",
+          "statDelta": {
+            "stakeholderTrust": 2,
+            "teamHealth": 2
+          },
+          "itemDropped": "coffee",
+          "questUnlocked": null
+        }
+      }
+    }
+  ],
+  "quests": [
+    {
+      "id": "q-sprint-goal-d1",
+      "title": "Lock the Sprint Goal",
+      "description": "Make 3 decisions this day that protect delivery speed or stakeholder trust. The sprint goal must survive Day 1.",
+      "type": "daily",
+      "steps": 3,
+      "reward": {
+        "statDelta": { "deliverySpeed": 5, "stakeholderTrust": 1 },
+        "itemId": null,
+        "xp": 50
+      },
+      "failPenalty": { "deliverySpeed": -5 },
+      "expiresDay": 1,
+      "hidden": false
+    },
+    {
+      "id": "q-backlog-triage-d1",
+      "title": "Tame the Backlog Beast",
+      "description": "Engage with backlog prioritization decisions at least twice today. The beast must be acknowledged.",
+      "type": "daily",
+      "steps": 2,
+      "reward": {
+        "statDelta": { "teamHealth": 2, "deliverySpeed": 3 },
+        "itemId": "kpi-dashboard",
+        "xp": 35
+      },
+      "failPenalty": null,
+      "expiresDay": 1,
+      "hidden": false
+    },
+    {
+      "id": "q-model-quality-d1",
+      "title": "Defend the Model",
+      "description": "Make at least 2 decisions that prioritize model quality or compliance over raw speed. The model is the product.",
+      "type": "daily",
+      "steps": 2,
+      "reward": {
+        "statDelta": { "modelQuality": 3, "riskCompliance": -2 },
+        "itemId": "dpa-doc",
+        "xp": 45
+      },
+      "failPenalty": { "riskCompliance": 2 },
+      "expiresDay": 2,
+      "hidden": false
+    },
+    {
+      "id": "q-hidden-impress-investor",
+      "title": "???",
+      "description": "A hidden opportunity has appeared. Something about an investor visit...",
+      "type": "hidden",
+      "steps": 1,
+      "reward": {
+        "statDelta": { "stakeholderTrust": 3, "deliverySpeed": 5 },
+        "itemId": "okr-doc",
+        "xp": 75
+      },
+      "failPenalty": { "stakeholderTrust": -2 },
+      "expiresDay": 2,
+      "hidden": true
+    }
+  ]
+}

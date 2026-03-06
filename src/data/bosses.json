@@ -1,0 +1,332 @@
+[
+  {
+    "id": "boss-demo-day",
+    "name": "DEMO DAY",
+    "title": "The Stakeholders Are Watching",
+    "description": "Every exec, investor, and enterprise prospect is in the room. Live demo. Three rounds to convince them. Your delivery, your model, your credibility — all on the line.",
+    "triggerDay": 4,
+    "triggerPhase": "morning",
+    "meterName": "Stakeholder Patience",
+    "meterStart": 60,
+    "meterWinThreshold": 30,
+    "meterLoseThreshold": 95,
+    "meterInverted": false,
+    "rounds": [
+      {
+        "id": "boss-demo-day-r1",
+        "setup": "The CEO opens by asking about the competitor feature everyone saw on TechCrunch this morning. The room is watching.",
+        "actions": [
+          {
+            "id": "a-demo-r1-roadmap",
+            "text": "Pull up the roadmap and walk them through your differentiation strategy.",
+            "consequence": "Clear, confident, specific. The CEO nods. Two VCs take notes. Patience recovers.",
+            "statDelta": { "stakeholderTrust": 1 },
+            "meterDelta": -15,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-demo-r1-pivot",
+            "text": "Pivot immediately to the live demo. 'Let's just show them.'",
+            "consequence": "Bold. The room leans forward. The demo hasn't fully loaded. You are buying time with charisma.",
+            "statDelta": { "deliverySpeed": 5, "teamHealth": -1 },
+            "meterDelta": -8,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-demo-r1-vague",
+            "text": "Acknowledge the competitor and say your approach is 'fundamentally different.'",
+            "consequence": "Technically true. Dangerously vague. Someone writes 'fundamentally different?' on their notepad.",
+            "statDelta": { "stakeholderTrust": -1 },
+            "meterDelta": 12,
+            "itemConsumed": null
+          }
+        ]
+      },
+      {
+        "id": "boss-demo-day-r2",
+        "setup": "The live demo hits a loading spinner. Eight seconds. It feels like eight minutes. The room is very quiet.",
+        "actions": [
+          {
+            "id": "a-demo-r2-narrate",
+            "text": "Narrate what's happening. 'This is live data — watch how it handles the edge case.'",
+            "consequence": "You turned a disaster into a feature demonstration. One engineer in the back silently applauds.",
+            "statDelta": { "modelQuality": 1 },
+            "meterDelta": -12,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-demo-r2-backup",
+            "text": "Switch to the pre-recorded backup demo.",
+            "consequence": "Smooth. Nobody mentions the switch out loud. Everybody noticed. It still looks good.",
+            "statDelta": { "stakeholderTrust": 1, "deliverySpeed": -3 },
+            "meterDelta": -6,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-demo-r2-wait",
+            "text": "Wait it out. It'll load.",
+            "consequence": "It loads. After 34 seconds. The CEO has typed something on their phone. You do not know what.",
+            "statDelta": { "teamHealth": -2 },
+            "meterDelta": 22,
+            "itemConsumed": null
+          }
+        ]
+      },
+      {
+        "id": "boss-demo-day-r3",
+        "setup": "Q&A begins. First question: 'What does the roadmap look like for the next 6 months?' All eyes on you.",
+        "actions": [
+          {
+            "id": "a-demo-r3-roadmap-item",
+            "text": "Pull out the roadmap document and walk through it milestone by milestone.",
+            "consequence": "Prepared. Credible. Trust earned. The enterprise lead asks for a copy.",
+            "statDelta": { "stakeholderTrust": 2, "deliverySpeed": 5 },
+            "meterDelta": -20,
+            "itemConsumed": "roadmap"
+          },
+          {
+            "id": "a-demo-r3-vision",
+            "text": "Paint an ambitious vision. High level, directional, no specifics.",
+            "consequence": "Inspiring but unverifiable. Three people are excited. One person is specifically not excited.",
+            "statDelta": { "stakeholderTrust": 1, "riskCompliance": 1 },
+            "meterDelta": -5,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-demo-r3-defer",
+            "text": "'Great question — we'll share a detailed roadmap post-meeting.'",
+            "consequence": "A classic deferral. Everyone knows what this means. The enterprise lead uncrosses their arms slowly.",
+            "statDelta": { "stakeholderTrust": -1 },
+            "meterDelta": 8,
+            "itemConsumed": null
+          }
+        ]
+      }
+    ],
+    "victoryConsequence": "Demo Day survived. The enterprise lead schedules a follow-up. The CEO says 'nice work' in Slack — in a channel with 200 people. This is the highest praise you will receive this quarter.",
+    "defeatConsequence": "The room empties faster than expected. The enterprise lead's assistant cancels the follow-up within the hour. Your calendar is now suspiciously clear.",
+    "victoryDelta": { "stakeholderTrust": 3, "deliverySpeed": 8, "teamHealth": 1 },
+    "defeatDelta": { "stakeholderTrust": -4, "deliverySpeed": -10 },
+    "xpReward": 150
+  },
+  {
+    "id": "boss-model-incident",
+    "name": "MODEL INCIDENT",
+    "title": "Hallucination in Production",
+    "description": "The model is returning confidently wrong answers to 3% of live users. Alert fired 8 minutes ago. A journalist already has a tip. Three rounds to contain this before it becomes a crisis.",
+    "triggerDay": 5,
+    "triggerPhase": "afternoon",
+    "meterName": "Risk Escalation",
+    "meterStart": 30,
+    "meterWinThreshold": 15,
+    "meterLoseThreshold": 80,
+    "meterInverted": false,
+    "rounds": [
+      {
+        "id": "boss-incident-r1",
+        "setup": "Engineering confirms: 3% of live requests returning incorrect outputs with high confidence. What's your first move?",
+        "actions": [
+          {
+            "id": "a-incident-r1-rollback",
+            "text": "Immediate rollback to last stable version. Kill the feature flag now.",
+            "consequence": "Decisive. Engineering executes in 4 minutes. Affected users drops to 0. Delivery takes the hit.",
+            "statDelta": { "modelQuality": 2, "deliverySpeed": -10 },
+            "meterDelta": -10,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-incident-r1-hotfix",
+            "text": "Deploy a guardrail filter hotfix. Monitor closely.",
+            "consequence": "Engineering moves fast. The filter catches 80% of bad outputs. Risk reduced but not eliminated.",
+            "statDelta": { "modelQuality": 1, "deliverySpeed": -3 },
+            "meterDelta": -5,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-incident-r1-monitor",
+            "text": "Wait for more data. 3% might be noise.",
+            "consequence": "It is not noise. 3% becomes 4.1% in 20 minutes. Someone has already tweeted.",
+            "statDelta": { "modelQuality": -1 },
+            "meterDelta": 18,
+            "itemConsumed": null
+          }
+        ]
+      },
+      {
+        "id": "boss-incident-r2",
+        "setup": "A tech journalist tweets: 'Hearing reports of wrong answers with high confidence from [YourProduct].' 847 retweets in 11 minutes.",
+        "actions": [
+          {
+            "id": "a-incident-r2-statement",
+            "text": "Publish a transparent incident statement with timeline and remediation steps.",
+            "consequence": "Honest and proactive. The journalist follows up with 'credit where it's due.' Risk drops sharply.",
+            "statDelta": { "stakeholderTrust": 1, "riskCompliance": -2 },
+            "meterDelta": -12,
+            "itemConsumed": "dpa-doc"
+          },
+          {
+            "id": "a-incident-r2-hold",
+            "text": "Legal drafts a careful response. Hold on public comms until reviewed.",
+            "consequence": "Measured. The response goes out 2 hours later — accurate, defensible, if not exactly warm.",
+            "statDelta": { "riskCompliance": -1, "deliverySpeed": -5 },
+            "meterDelta": -6,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-incident-r2-silence",
+            "text": "No comment. Let the product speak for itself.",
+            "consequence": "The silence speaks louder. TechCrunch picks it up by 4 PM. Trust craters.",
+            "statDelta": { "stakeholderTrust": -2, "riskCompliance": 2 },
+            "meterDelta": 22,
+            "itemConsumed": null
+          }
+        ]
+      },
+      {
+        "id": "boss-incident-r3",
+        "setup": "The board wants a briefing in 60 minutes. Root cause, impact, remediation, prevention. You have the data. Do you have the narrative?",
+        "actions": [
+          {
+            "id": "a-incident-r3-full-report",
+            "text": "Present a full incident report with root cause analysis and a concrete prevention plan.",
+            "consequence": "The board is grim but satisfied. 'This is how incidents should be handled.' Risk minimised.",
+            "statDelta": { "stakeholderTrust": 2, "modelQuality": 1 },
+            "meterDelta": -15,
+            "itemConsumed": "model-card"
+          },
+          {
+            "id": "a-incident-r3-verbal",
+            "text": "Give a tight verbal briefing with the key facts and immediate next steps.",
+            "consequence": "Clear and direct. They appreciate the brevity. Written report requested by EOD.",
+            "statDelta": { "stakeholderTrust": 1 },
+            "meterDelta": -8,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-incident-r3-delegate",
+            "text": "Send the engineering lead to present. You stay focused on remediation.",
+            "consequence": "Excellent technical depth, zero PM context. The board asks where you were.",
+            "statDelta": { "stakeholderTrust": -2, "teamHealth": -1 },
+            "meterDelta": 12,
+            "itemConsumed": null
+          }
+        ]
+      }
+    ],
+    "victoryConsequence": "Incident closed. The post-mortem is thorough, the prevention plan is credible. A journalist writes a follow-up: 'How [Product] handled its first public AI failure — and what others can learn.'",
+    "defeatConsequence": "The story metastasised. Enterprise clients paused renewals pending review. Legal is scheduling a full audit. The board has requested an external review committee.",
+    "victoryDelta": { "riskCompliance": -3, "modelQuality": 2, "stakeholderTrust": 1 },
+    "defeatDelta": { "riskCompliance": 5, "modelQuality": -3, "stakeholderTrust": -2 },
+    "xpReward": 175
+  },
+  {
+    "id": "boss-procurement",
+    "name": "ENTERPRISE GATE",
+    "title": "Procurement & Security Review",
+    "description": "An enterprise client wants to sign. They have a security team, a legal team, and a 47-question questionnaire. Enterprise Confidence must rise. Three rounds to get through the gate.",
+    "triggerDay": 3,
+    "triggerPhase": "evening",
+    "meterName": "Enterprise Confidence",
+    "meterStart": 40,
+    "meterWinThreshold": 75,
+    "meterLoseThreshold": 10,
+    "meterInverted": true,
+    "rounds": [
+      {
+        "id": "boss-procurement-r1",
+        "setup": "The enterprise security team sends a 47-question vendor security questionnaire. Due in 48 hours. Your security docs are... aspirational.",
+        "actions": [
+          {
+            "id": "a-procurement-r1-dedicated",
+            "text": "Block a full day with your Security lead to answer every question thoroughly.",
+            "consequence": "Comprehensive. The security team is visibly impressed. Confidence rises significantly.",
+            "statDelta": { "riskCompliance": -2, "deliverySpeed": -8 },
+            "meterDelta": 20,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-procurement-r1-partial",
+            "text": "Answer the 20 most critical questions in depth. Flag the rest for a follow-up call.",
+            "consequence": "Efficient. They appreciate the prioritisation. A follow-up call is scheduled.",
+            "statDelta": { "deliverySpeed": -5 },
+            "meterDelta": 13,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-procurement-r1-template",
+            "text": "Send the standard vendor security template. It covers most of it.",
+            "consequence": "They've seen templates before. Twelve follow-up questions arrive the next morning.",
+            "statDelta": { "riskCompliance": 1, "stakeholderTrust": -1 },
+            "meterDelta": 5,
+            "itemConsumed": null
+          }
+        ]
+      },
+      {
+        "id": "boss-procurement-r2",
+        "setup": "Legal flags three data handling concerns: data residency, retention policy, and GDPR sub-processor obligations. Each is a deal-breaker if unresolved.",
+        "actions": [
+          {
+            "id": "a-procurement-r2-dpa",
+            "text": "Schedule a formal DPA review with Legal and pause new data ingestion during review.",
+            "consequence": "Rigorous. Legal is relieved. The enterprise client sees a serious partner. Confidence jumps.",
+            "statDelta": { "riskCompliance": -3, "deliverySpeed": -6 },
+            "meterDelta": 20,
+            "itemConsumed": "dpa-doc"
+          },
+          {
+            "id": "a-procurement-r2-partial-fix",
+            "text": "Resolve the two easier concerns now. Log the third as a roadmap item.",
+            "consequence": "Good faith gesture. They see progress. Confidence improves moderately.",
+            "statDelta": { "riskCompliance": -1, "deliverySpeed": -3 },
+            "meterDelta": 10,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-procurement-r2-argue",
+            "text": "Explain that your current data handling is 'industry standard.'",
+            "consequence": "'Industry standard' is not a legal standard. Their lawyer responds the same day.",
+            "statDelta": { "riskCompliance": 2, "stakeholderTrust": -1 },
+            "meterDelta": -12,
+            "itemConsumed": null
+          }
+        ]
+      },
+      {
+        "id": "boss-procurement-r3",
+        "setup": "The enterprise CTO asks: 'We need to self-host this model. Our policy doesn't allow external API calls for sensitive data.' This was not in the brief.",
+        "actions": [
+          {
+            "id": "a-procurement-r3-roadmap",
+            "text": "Present your technical architecture and share a self-host roadmap with timeline.",
+            "consequence": "'This is the answer we were hoping for.' The deal moves forward.",
+            "statDelta": { "stakeholderTrust": 2, "deliverySpeed": -8 },
+            "meterDelta": 18,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-procurement-r3-tenant",
+            "text": "Offer a dedicated cloud tenant with data isolation as a near-term alternative.",
+            "consequence": "A practical compromise. They accept it as a bridge. Confidence holds.",
+            "statDelta": { "stakeholderTrust": 1, "riskCompliance": -1 },
+            "meterDelta": 10,
+            "itemConsumed": null
+          },
+          {
+            "id": "a-procurement-r3-escalate",
+            "text": "Escalate to leadership — this is a policy decision above your authority.",
+            "consequence": "Correct process, poor optics. The CTO expected an answer today. Confidence drops.",
+            "statDelta": { "teamHealth": -1, "stakeholderTrust": -1 },
+            "meterDelta": -8,
+            "itemConsumed": null
+          }
+        ]
+      }
+    ],
+    "victoryConsequence": "Deal closed. Security review passed. The enterprise client signs. Their team sends a note: 'Best vendor review process we've been through this year.' Legal gets a copy for the trophy wall.",
+    "defeatConsequence": "The enterprise client pauses the evaluation. 'We need more time to assess your compliance posture.' This is a polite rejection. They are not coming back this quarter.",
+    "victoryDelta": { "stakeholderTrust": 3, "riskCompliance": -2, "deliverySpeed": 5 },
+    "defeatDelta": { "stakeholderTrust": -3, "riskCompliance": 2 },
+    "xpReward": 150
+  }
+]

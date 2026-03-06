@@ -1,0 +1,293 @@
+{
+  "id": "day-2",
+  "dayNumber": 2,
+  "brief": "Tuesday. The VP saw the eval thread. Legal responded to your email with 'Can we find time this week?' The demo is tomorrow. Nobody has confirmed the staging environment works.",
+  "modifier": {
+    "id": "mod-back-to-back",
+    "title": "Back-to-Back Tuesday",
+    "description": "Your calendar is fully blocked until 4 PM. Every choice today costs 1 extra teamHealth.",
+    "statDelta": {
+      "teamHealth": -1,
+      "deliverySpeed": -5
+    }
+  },
+  "phases": [
+    {
+      "id": "day-2-morning",
+      "phase": "morning",
+      "scenario": {
+        "id": "s-escalation-day2",
+        "type": "escalation",
+        "title": "The VP Is Live-Frustrated",
+        "flavor": "9:15 AM. The VP skipped the usual pleasantries.",
+        "description": "The VP of Product messages you directly: 'I saw the eval thread. I need to understand the risk to Thursday's launch before I talk to the board. Can you join a call at 10?' It is 9:15. You have 45 minutes to prepare.",
+        "choices": [
+          {
+            "id": "c-esc-prepare",
+            "text": "Prep a crisp risk summary and join the call.",
+            "consequence": "The VP appreciates the clarity. They share the summary with the board. Your name is now associated with being calm under pressure.",
+            "statDelta": { "stakeholderTrust": 2, "deliverySpeed": -5, "teamHealth": -1 },
+            "itemGained": "okr-doc",
+            "itemConsumed": null,
+            "questProgress": "q-trust-recovery-d2"
+          },
+          {
+            "id": "c-esc-wing",
+            "text": "Join the call without prep. Speak from memory.",
+            "consequence": "You handle it. Mostly. The VP leaves the call with one more question than when they entered. That question is now a Slack thread.",
+            "statDelta": { "stakeholderTrust": 0, "teamHealth": -2, "riskCompliance": 1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-esc-delay",
+            "text": "Reschedule to 2 PM. 'I want to give you accurate numbers.'",
+            "consequence": "The VP agrees. You now have 5 hours to get accurate numbers. This was the right call but it cost social capital.",
+            "statDelta": { "stakeholderTrust": -1, "modelQuality": 1, "deliverySpeed": -3 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          }
+        ],
+        "randomEvent": {
+          "id": "e-board-cc",
+          "type": "random",
+          "rarity": 1,
+          "title": "Board Member CCed on the Thread",
+          "description": "A board member was inadvertently copied on the eval concern thread. They have not responded. Their silence is heavy.",
+          "statDelta": { "stakeholderTrust": -1, "riskCompliance": 1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-vp-ally",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "The VP Goes to Bat for You",
+          "description": "The VP, impressed by your preparation, tells the board the team has a solid mitigation plan. You did not know they would do this. It helps enormously.",
+          "statDelta": { "stakeholderTrust": 3, "teamHealth": 1 },
+          "itemDropped": "stakeholder-email",
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-2-midday",
+      "phase": "midday",
+      "scenario": {
+        "id": "s-privacy-review-day2",
+        "type": "privacy-review",
+        "title": "Legal Found Something",
+        "flavor": "11:45 AM. The calendar invite says 'Quick Legal Sync'. It is never quick.",
+        "description": "Legal has flagged a data handling issue: user conversation logs are being retained longer than the DPA states. It affects 40,000 EU users. They need a response plan before the launch. 'This needs to be resolved before any public announcement of the AI feature.'",
+        "choices": [
+          {
+            "id": "c-privacy-fix-now",
+            "text": "Halt the launch. Fix the data pipeline first.",
+            "consequence": "Launch delayed. Legal is satisfied. Engineering scrambles. The board is informed. You sleep slightly better than you would have otherwise.",
+            "statDelta": { "stakeholderTrust": -1, "modelQuality": 1, "deliverySpeed": -10, "riskCompliance": -3 },
+            "itemGained": "dpa-doc",
+            "itemConsumed": null,
+            "questProgress": "q-compliance-clean-d2"
+          },
+          {
+            "id": "c-privacy-parallel",
+            "text": "Fix it in parallel — launch non-EU first.",
+            "consequence": "Smart segmentation. EU launch delayed 1 week. US launch proceeds. Legal rates this 'acceptable with conditions'.",
+            "statDelta": { "stakeholderTrust": 1, "deliverySpeed": -5, "riskCompliance": -1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-compliance-clean-d2"
+          },
+          {
+            "id": "c-privacy-risk-accept",
+            "text": "Accept the risk. Ship globally, fix post-launch.",
+            "consequence": "You ship. Legal documents their objection. The fix is 'in the next release'. Risk is now your middle name.",
+            "statDelta": { "stakeholderTrust": 1, "deliverySpeed": 5, "riskCompliance": 4 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null,
+            "scopeCreep": true
+          }
+        ],
+        "randomEvent": {
+          "id": "e-gdpr-inquiry",
+          "type": "random",
+          "rarity": 1,
+          "title": "GDPR Inquiry Email Arrives",
+          "description": "An automated inquiry from an EU data authority arrives. Probably routine. Legal says it's 'probably routine' with the energy of someone who is not certain.",
+          "statDelta": { "riskCompliance": 1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-legal-champion",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "Legal Counsel Writes You a Compliment",
+          "description": "Your Legal contact sends a message: 'Your team's handling of this is genuinely impressive.' This has never happened before in recorded company history.",
+          "statDelta": { "stakeholderTrust": 2, "riskCompliance": -1 },
+          "itemDropped": "dpa-doc",
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-2-afternoon",
+      "phase": "afternoon",
+      "scenario": {
+        "id": "s-demo-prep-day2",
+        "type": "demo-day",
+        "title": "Demo Tomorrow, Build Today",
+        "flavor": "2:30 PM. The demo is in 18 hours. The feature is 65% done.",
+        "description": "The quarterly exec demo is tomorrow at 10 AM. The feature is functional but rough. The happy path works. The unhappy path crashes. You have 18 hours, a tired team, and one engineer who hasn't committed code since Friday.",
+        "choices": [
+          {
+            "id": "c-demo-scope-reduce",
+            "text": "Scope down the demo to the working 65%.",
+            "consequence": "The demo covers a smaller surface but everything you show works. Executives appreciate polish over breadth. This was the right call.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": 1, "modelQuality": 1, "deliverySpeed": -3 },
+            "itemGained": "roadmap",
+            "itemConsumed": null,
+            "questProgress": "q-demo-ready-d2"
+          },
+          {
+            "id": "c-demo-crunch",
+            "text": "Crunch tonight. Get to 90% by 9 AM.",
+            "consequence": "The team pushes hard. You hit 85%. The remaining 15% crashes when clicked. You will not click it in the demo. You have memorized the safe path.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": -3, "deliverySpeed": 8 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-demo-ready-d2",
+            "scopeCreep": true
+          },
+          {
+            "id": "c-demo-staging-only",
+            "text": "Demo from staging only. Document what's missing.",
+            "consequence": "Transparent and professional. Execs appreciate the honesty. One exec asks 'Why isn't it done?' You have a good answer prepared.",
+            "statDelta": { "stakeholderTrust": 0, "teamHealth": 2, "riskCompliance": -1, "deliverySpeed": -5 },
+            "itemGained": "stakeholder-email",
+            "itemConsumed": null,
+            "questProgress": null
+          }
+        ],
+        "randomEvent": {
+          "id": "e-staging-down",
+          "type": "random",
+          "rarity": 1,
+          "title": "Staging Environment Goes Down at 3 PM",
+          "description": "Infra Slack: 'staging is having issues, working on it.' It is not resolved by 5 PM. The demo environment is uncertain.",
+          "statDelta": { "teamHealth": -1, "deliverySpeed": -5 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-eng-hero",
+          "type": "rare",
+          "rarity": 0.25,
+          "title": "Engineer Heroics: 'I Fixed the Crash'",
+          "description": "A senior engineer stays late voluntarily and patches the crash. Unprompted. The feature is now at 80%. Team morale spikes briefly.",
+          "statDelta": { "teamHealth": 2, "modelQuality": 2, "deliverySpeed": 5 },
+          "itemDropped": "jira-ticket",
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-2-evening",
+      "phase": "evening",
+      "scenario": {
+        "id": "s-incident-day2",
+        "type": "incident",
+        "title": "Alert at 5:12 PM",
+        "flavor": "5:12 PM. PagerDuty. The demo is tomorrow at 10 AM.",
+        "description": "An alert fires: API error rate elevated to 12%, primarily in the inference service. It's not catastrophic but it's visible to users. The on-call engineer is new. The VP has not seen this yet. The demo is tomorrow.",
+        "choices": [
+          {
+            "id": "c-incident-lead",
+            "text": "Take the lead. Join the war room now.",
+            "consequence": "You coordinate the response. The issue is resolved in 90 minutes. The inference service is stable before midnight. The team is exhausted but the demo is safe.",
+            "statDelta": { "stakeholderTrust": 2, "teamHealth": -2, "deliverySpeed": -5 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-demo-ready-d2"
+          },
+          {
+            "id": "c-incident-delegate",
+            "text": "Delegate to the on-call engineer. Brief the VP proactively.",
+            "consequence": "The VP appreciates the heads-up. The on-call engineer resolves it independently. You discover they're capable. This was good for everyone.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": 0, "deliverySpeed": -3 },
+            "itemGained": "stakeholder-email",
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-incident-monitor",
+            "text": "Monitor from the sidelines. It may self-resolve.",
+            "consequence": "It does not self-resolve. You are woken at 11 PM by a second alert. The on-call engineer is now also awake.",
+            "statDelta": { "stakeholderTrust": -1, "teamHealth": -1, "riskCompliance": 2 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          }
+        ],
+        "randomEvent": {
+          "id": "e-status-page",
+          "type": "random",
+          "rarity": 1,
+          "title": "Users Notice the Status Page Is Outdated",
+          "description": "Someone tweets that your status page shows 'all systems operational' while they're experiencing errors. The tweet gets 47 likes. Your social media manager sees it.",
+          "statDelta": { "stakeholderTrust": -1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-root-cause-found",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "Root Cause Identified Instantly",
+          "description": "The on-call engineer identifies the root cause in 8 minutes: a misconfigured timeout added in this morning's deploy. Fixed in 12 minutes. Total incident duration: 20 minutes. Team efficiency rating: high.",
+          "statDelta": { "teamHealth": 2, "stakeholderTrust": 1, "riskCompliance": -1 },
+          "itemDropped": "rubber-duck",
+          "questUnlocked": null
+        }
+      }
+    }
+  ],
+  "quests": [
+    {
+      "id": "q-trust-recovery-d2",
+      "title": "Rebuild VP Trust",
+      "description": "Take at least 1 decisive action that directly addresses the VP's concerns today.",
+      "type": "daily",
+      "steps": 1,
+      "reward": { "statDelta": { "stakeholderTrust": 2 }, "itemId": null, "xp": 40 },
+      "failPenalty": { "stakeholderTrust": -1 },
+      "expiresDay": 2,
+      "hidden": false
+    },
+    {
+      "id": "q-demo-ready-d2",
+      "title": "Demo-Ready by 9 AM",
+      "description": "Make 2 decisions today that contribute to a stable, demonstrable product.",
+      "type": "daily",
+      "steps": 2,
+      "reward": { "statDelta": { "deliverySpeed": 8, "stakeholderTrust": 1 }, "itemId": "roadmap", "xp": 50 },
+      "failPenalty": { "deliverySpeed": -8 },
+      "expiresDay": 2,
+      "hidden": false
+    },
+    {
+      "id": "q-compliance-clean-d2",
+      "title": "Clear the Compliance Risk",
+      "description": "Address the legal data issue before it escalates to the board.",
+      "type": "daily",
+      "steps": 1,
+      "reward": { "statDelta": { "riskCompliance": -3 }, "itemId": "dpa-doc", "xp": 45 },
+      "failPenalty": { "riskCompliance": 3 },
+      "expiresDay": 3,
+      "hidden": false
+    }
+  ]
+}

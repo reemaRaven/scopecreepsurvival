@@ -1,0 +1,59 @@
+Done
+==========
+check music
+then below
+
+Do this only after the mvp works. this is an aDvanceD feature
+
+Create 3 boss encounters:
+1) Demo Day (stakeholders watching)
+2) Model Incident (hallucination/regression in prod)
+3) Procurement & Security Review (enterprise gate)
+Boss fight format:
+- Multi-turn decision battle (3 rounds)
+- Each round offers 3 actions
+- Boss has a meter (Patience, Risk, Confidence)
+- Player stats + items influence outcomes
+Return JSON + engine logic changes needed.
+
+
+
+Design meta progression:
+- Unlock new roles (AI PM, AI TPM, AI Program Lead)
+- Unlock new locations (standup room, war room, client call, demo stage)
+- Unlock new difficulty modifiers (chaos level, compliance strictness)
+Provide:
+1) Level table (1-20) with unlocks
+2) Achievement list (20)
+3) Daily modifiers (10)
+Output JSON + how to store in save file.
+
+"implement boss encounters" and "implement meta progression"
+
+
+
+landing page (how to play what its about)
+"Hi! This is Reema (Also ravenBlack in the gaming world). I work as an AI PM at HexaviewTech (add their website link).
+I love gaming and also love working on new tech ideas and learning
+I made a game about a daily life of an AI PM! Enjoy playing - <restructure this statement in a gamified way use chatgpt>
+Image of me from the linkedin URL
+How to Play section
+" 
+
+firebase implementation - and login 
+
+===================================================================================================================
+
+seo : so that when i host it, i know from where the user was reirecte from. i plan to publish the url on variety of platforms as below (scopecreepsurvival.com)
+
+push to git : create a reame that tells how to play the game also how to install an run it on your machine locally
+
+host it on your website (inform ashu for them to remove vermaprinters.com from their goole business an anywhere they might have use it).- put up analytics of what is the traffic source (platform etc)
+
+marketing : sunDay : 
+	linkein post, 
+	IG - reel + story + hash an promote, whatsapp, FB 
+	reDDit
+	youtube
+	discord
+	ycombinator ?(website) i ont remember. check that an put there. 2k views aye the ek bar ek article rop kia tha maine

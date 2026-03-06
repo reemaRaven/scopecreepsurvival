@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ScopeCreepSurvival/Day",
+  "title": "Day",
+  "description": "A single day in ScopeCreep Survival. Always 4 phases.",
+  "type": "object",
+  "required": ["id", "dayNumber", "brief", "modifier", "phases", "quests"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^day-[1-5]$" },
+    "dayNumber": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "brief": { "type": "string", "minLength": 10 },
+    "modifier": {
+      "oneOf": [
+        { "$ref": "#/$defs/DayModifier" },
+        { "type": "null" }
+      ]
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/Phase" }
+    },
+    "quests": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Quest" }
+    }
+  },
+
+  "$defs": {
+
+    "StatDelta": {
+      "type": "object",
+      "properties": {
+        "stakeholderTrust": { "type": "number", "minimum": -5, "maximum": 5 },
+        "teamHealth":       { "type": "number", "minimum": -5, "maximum": 5 },
+        "modelQuality":     { "type": "number", "minimum": -5, "maximum": 5 },
+        "deliverySpeed":    { "type": "number", "minimum": -15, "maximum": 15 },
+        "riskCompliance":   { "type": "number", "minimum": -5, "maximum": 5 }
+      },
+      "additionalProperties": false
+    },
+
+    "Choice": {
+      "type": "object",
+      "required": ["id", "text", "consequence", "statDelta", "itemGained", "itemConsumed", "questProgress"],
+      "properties": {
+        "id":            { "type": "string" },
+        "text":          { "type": "string", "maxLength": 80 },
+        "consequence":   { "type": "string", "maxLength": 300 },
+        "statDelta":     { "$ref": "#/$defs/StatDelta" },
+        "itemGained":    { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "itemConsumed":  { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "questProgress": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "requiresLevel": { "type": "integer", "minimum": 1 }
+      }
+    },
+
+    "GameEvent": {
+      "type": "object",
+      "required": ["id", "type", "rarity", "title", "description", "statDelta", "itemDropped", "questUnlocked"],
+      "properties": {
+        "id":            { "type": "string" },
+        "type":          { "type": "string", "enum": ["random", "rare", "cascade", "day-modifier"] },
+        "rarity":        { "type": "number", "minimum": 0, "maximum": 1 },
+        "title":         { "type": "string" },
+        "description":   { "type": "string" },
+        "statDelta":     { "$ref": "#/$defs/StatDelta" },
+        "itemDropped":   { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "questUnlocked": { "oneOf": [{ "type": "string" }, { "type": "null" }] }
+      }
+    },
+
+    "Scenario": {
+      "type": "object",
+      "required": ["id", "type", "title", "flavor", "description", "choices", "randomEvent", "rareEvent"],
+      "properties": {
+        "id":          { "type": "string" },
+        "type":        {
+          "type": "string",
+          "enum": ["standup", "backlog", "escalation", "model-evals", "privacy-review", "demo-day", "incident", "leadership-update"]
+        },
+        "title":       { "type": "string" },
+        "flavor":      { "type": "string" },
+        "description": { "type": "string" },
+        "choices": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/Choice" }
+        },
+        "randomEvent": { "$ref": "#/$defs/GameEvent" },
+        "rareEvent":   { "$ref": "#/$defs/GameEvent" }
+      }
+    },
+
+    "Phase": {
+      "type": "object",
+      "required": ["id", "phase", "scenario"],
+      "properties": {
+        "id":       { "type": "string" },
+        "phase":    { "type": "string", "enum": ["morning", "midday", "afternoon", "evening"] },
+        "scenario": { "$ref": "#/$defs/Scenario" }
+      }
+    },
+
+    "DayModifier": {
+      "type": "object",
+      "required": ["id", "title", "description", "statDelta"],
+      "properties": {
+        "id":          { "type": "string" },
+        "title":       { "type": "string" },
+        "description": { "type": "string" },
+        "statDelta":   { "$ref": "#/$defs/StatDelta" }
+      }
+    },
+
+    "QuestReward": {
+      "type": "object",
+      "required": ["xp"],
+      "properties": {
+        "statDelta": { "$ref": "#/$defs/StatDelta" },
+        "itemId":    { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "xp":        { "type": "integer", "minimum": 0 }
+      }
+    },
+
+    "Quest": {
+      "type": "object",
+      "required": ["id", "title", "description", "type", "steps", "reward", "failPenalty", "expiresDay", "hidden"],
+      "properties": {
+        "id":          { "type": "string" },
+        "title":       { "type": "string" },
+        "description": { "type": "string" },
+        "type":        { "type": "string", "enum": ["daily", "sprint", "hidden"] },
+        "steps":       { "type": "integer", "minimum": 1 },
+        "reward":      { "$ref": "#/$defs/QuestReward" },
+        "failPenalty": { "oneOf": [{ "$ref": "#/$defs/StatDelta" }, { "type": "null" }] },
+        "expiresDay":  { "oneOf": [{ "type": "integer", "minimum": 1, "maximum": 5 }, { "type": "null" }] },
+        "hidden":      { "type": "boolean" }
+      }
+    }
+  }
+}

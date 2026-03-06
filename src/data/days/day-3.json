@@ -1,0 +1,283 @@
+{
+  "id": "day-3",
+  "dayNumber": 3,
+  "brief": "Wednesday. The sprint is at midpoint. Delivery speed is wobbling. The second batch of eval results just landed. A competitor published a case study this morning that looks uncomfortably like your roadmap.",
+  "modifier": {
+    "id": "mod-sprint-midpoint",
+    "title": "Sprint Midpoint Pressure",
+    "description": "Everyone can see the burndown chart. It is not going in the right direction.",
+    "statDelta": {
+      "deliverySpeed": -5,
+      "teamHealth": -1
+    }
+  },
+  "phases": [
+    {
+      "id": "day-3-morning",
+      "phase": "morning",
+      "scenario": {
+        "id": "s-backlog-day3",
+        "type": "backlog",
+        "title": "The Sprint Is Off Track",
+        "flavor": "9:00 AM. The burndown chart looks like a cliff, not a slope.",
+        "description": "Sprint planning committed to 34 story points. The team has completed 8 by Wednesday morning. Three engineers are blocked. Two tickets have unclear acceptance criteria (written at 10 PM on Sunday). The sprint goal is technically still alive but only if you squint.",
+        "choices": [
+          {
+            "id": "c-backlog-replan",
+            "text": "Emergency re-plan: cut scope, protect the goal.",
+            "consequence": "Sprint scope cut by 40%. The sprint goal survives. Three stakeholders are notified. One replies with a thumbs-up emoji that could mean anything.",
+            "statDelta": { "stakeholderTrust": -1, "teamHealth": 2, "deliverySpeed": 8 },
+            "itemGained": "roadmap",
+            "itemConsumed": null,
+            "questProgress": "q-sprint-midpoint-d3"
+          },
+          {
+            "id": "c-backlog-heroes",
+            "text": "Keep the original scope. Motivate the team.",
+            "consequence": "Three engineers have a brief motivational spike. By 3 PM they are as blocked as before. The motivation was real. The blockers were also real.",
+            "statDelta": { "teamHealth": -1, "deliverySpeed": -5, "stakeholderTrust": 1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null,
+            "scopeCreep": true
+          },
+          {
+            "id": "c-backlog-unblock",
+            "text": "Focus: unblock the 3 stuck engineers first.",
+            "consequence": "Two blockers cleared in 2 hours. One required a decision that cost you 3 velocity points to resolve. Worth it.",
+            "statDelta": { "teamHealth": 1, "deliverySpeed": 5, "modelQuality": 1 },
+            "itemGained": "jira-ticket",
+            "itemConsumed": null,
+            "questProgress": "q-sprint-midpoint-d3"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-new-req",
+          "type": "random",
+          "rarity": 1,
+          "title": "Marketing Submits a 'Tiny' Mid-Sprint Request",
+          "description": "Marketing Slack: 'Super quick thing — can we add a share button to the AI output? It's like 2 hours.' The engineer who hears this makes a face.",
+          "statDelta": { "teamHealth": -1, "deliverySpeed": -3 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-pair-programming",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "Spontaneous Pair Programming Unlocks Progress",
+          "description": "Two engineers pair on the hardest ticket. They solve it in 90 minutes. The ticket was estimated at 8 points. They want to re-estimate everything now.",
+          "statDelta": { "teamHealth": 2, "deliverySpeed": 8, "modelQuality": 1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-3-midday",
+      "phase": "midday",
+      "scenario": {
+        "id": "s-model-evals-day3",
+        "type": "model-evals",
+        "title": "Second Batch of Bad News",
+        "flavor": "11:30 AM. The eval pipeline just finished. The results are not better.",
+        "description": "New eval results are in. The 4.2-point gap from Monday is now 5.1 points. The mitigations from Tuesday haven't propagated yet, or they didn't work. Engineering has a theory: data distribution shift in the fine-tuning set. Fixing it properly takes 4 days.",
+        "choices": [
+          {
+            "id": "c-evals2-investigate",
+            "text": "Pause. Investigate the distribution shift properly.",
+            "consequence": "Four-day investigation begins. The launch window narrows to next sprint. Model quality will be better. It will be much later.",
+            "statDelta": { "modelQuality": 3, "deliverySpeed": -10, "stakeholderTrust": -1 },
+            "itemGained": "prompt-template",
+            "itemConsumed": null,
+            "questProgress": "q-model-defense-d3"
+          },
+          {
+            "id": "c-evals2-quick-fix",
+            "text": "Apply a targeted data patch. Ship with known limitations.",
+            "consequence": "The patch reduces the gap to 2.8 points. Not great. Not a disaster. 'Within acceptable variance' if you say it with confidence.",
+            "statDelta": { "modelQuality": 1, "deliverySpeed": -3, "riskCompliance": 1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": "q-model-defense-d3"
+          },
+          {
+            "id": "c-evals2-ship-anyway",
+            "text": "The existing mitigations are enough. Ship on schedule.",
+            "consequence": "You ship. The quality gap is real. Users in beta notice. The NPS scores will reflect this in two weeks, which is future-you's problem.",
+            "statDelta": { "deliverySpeed": 8, "modelQuality": -2, "riskCompliance": 2 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null,
+            "scopeCreep": false
+          }
+        ],
+        "randomEvent": {
+          "id": "e-eval-tool-update",
+          "type": "random",
+          "rarity": 1,
+          "title": "Eval Tooling Updates Its Scoring Methodology",
+          "description": "The internal eval platform pushed an update that changes how scores are calculated. Your 5.1-point gap is now reported as 4.8. Nothing has changed. The numbers just look slightly better.",
+          "statDelta": { "riskCompliance": -1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-researcher-solution",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "ML Researcher Has a 6-Hour Fix",
+          "description": "A researcher from the ML team proposes a targeted synthetic data injection that could close 70% of the gap in 6 hours. It's never been tried in production. It might work.",
+          "statDelta": { "modelQuality": 3, "deliverySpeed": -3, "riskCompliance": 1 },
+          "itemDropped": "prompt-template",
+          "questUnlocked": "q-model-defense-d3"
+        }
+      }
+    },
+    {
+      "id": "day-3-afternoon",
+      "phase": "afternoon",
+      "scenario": {
+        "id": "s-leadership-day3",
+        "type": "leadership-update",
+        "title": "The Mid-Sprint Check-In",
+        "flavor": "3:00 PM. Everyone can read the burndown chart. The meeting is tense.",
+        "description": "Mid-sprint review with the leadership team. The burndown chart is visible on screen. Delivery speed is below plan. Eval quality is still a concern. One executive asks: 'Are we confident in Thursday?' Another executive is taking notes.",
+        "choices": [
+          {
+            "id": "c-lead-honest-no",
+            "text": "Be direct: Thursday is at risk. Propose a mitigation.",
+            "consequence": "Silence for 3 seconds. Then the exec taking notes says: 'Thank you for telling us now.' A second sync is booked for tomorrow morning.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": 2, "deliverySpeed": -3, "riskCompliance": -2 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-lead-cautiously-yes",
+            "text": "Cautiously optimistic: 'We're tracking it closely.'",
+            "consequence": "Everyone nods. Nobody feels better. 'Tracking it closely' is corporate for 'we don't know'. They know you know they know.",
+            "statDelta": { "stakeholderTrust": -1, "deliverySpeed": 3, "riskCompliance": 1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null,
+            "scopeCreep": false
+          },
+          {
+            "id": "c-lead-plan",
+            "text": "Present a revised plan with explicit tradeoffs.",
+            "consequence": "The plan shows three options: delay 1 week, ship with scope cut, or ship with risk. Executives pick option 2. You now have a mandate.",
+            "statDelta": { "stakeholderTrust": 2, "deliverySpeed": 3, "teamHealth": 1 },
+            "itemGained": "roadmap",
+            "itemConsumed": null,
+            "questProgress": "q-sprint-midpoint-d3"
+          }
+        ],
+        "randomEvent": {
+          "id": "e-competitor-case-study",
+          "type": "random",
+          "rarity": 1,
+          "title": "Competitor Publishes Your Roadmap as a Case Study",
+          "description": "A competitor published a 'how we built it' case study for a feature that looks exactly like what you're building. Three people forward it to you separately. The subject line is just 'have you seen this'.",
+          "statDelta": { "stakeholderTrust": -1, "teamHealth": -1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-exec-champion",
+          "type": "rare",
+          "rarity": 0.15,
+          "title": "Executive Publicly Backs the Team",
+          "description": "An executive sends a company-wide Slack: 'The PM and engineering team are doing exceptional work under real pressure. Watch this space.' Morale spikes. Everyone screenshots it.",
+          "statDelta": { "stakeholderTrust": 3, "teamHealth": 2 },
+          "itemDropped": "okr-doc",
+          "questUnlocked": null
+        }
+      }
+    },
+    {
+      "id": "day-3-evening",
+      "phase": "evening",
+      "scenario": {
+        "id": "s-escalation-evening-day3",
+        "type": "escalation",
+        "title": "The Stakeholder Wildcard",
+        "flavor": "6:00 PM. A Slack message from someone you haven't spoken to in two weeks.",
+        "description": "The Head of Sales messages you: 'Heard the launch might be slipping. I have three enterprise clients expecting the AI feature in their demos next week. Can we talk?' This is the first you're hearing about enterprise demo commitments. These were not in any planning doc.",
+        "choices": [
+          {
+            "id": "c-sales-escalate",
+            "text": "Escalate immediately. Loop in leadership tonight.",
+            "consequence": "Leadership is looped in. Sales has indeed promised the feature to clients. This is now a cross-functional incident. You did the right thing by surfacing it.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": -1, "riskCompliance": -2 },
+            "itemGained": "stakeholder-email",
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-sales-negotiate",
+            "text": "Negotiate with Sales: what's the minimum viable demo?",
+            "consequence": "Sales agrees to demo the working 65%. You scope the enterprise demo to the happy path. The clients won't know what's missing. You're not sure if this is smart or postponing a problem.",
+            "statDelta": { "stakeholderTrust": 1, "teamHealth": 0, "deliverySpeed": -3 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          },
+          {
+            "id": "c-sales-push-back",
+            "text": "Push back directly: these commitments weren't coordinated.",
+            "consequence": "Sales is annoyed. You are correct. Both things are true simultaneously. Sales files a 'process concern' with your manager.",
+            "statDelta": { "stakeholderTrust": -2, "teamHealth": 1, "riskCompliance": -1 },
+            "itemGained": null,
+            "itemConsumed": null,
+            "questProgress": null
+          }
+        ],
+        "randomEvent": {
+          "id": "e-sales-email",
+          "type": "random",
+          "rarity": 1,
+          "title": "Sales Sends a Forward: 'Client is Very Excited'",
+          "description": "Sales forwards a glowing client email with the comment 'So pumped!' The client is excited about a feature that does not fully exist yet.",
+          "statDelta": { "riskCompliance": 1, "stakeholderTrust": 1 },
+          "itemDropped": null,
+          "questUnlocked": null
+        },
+        "rareEvent": {
+          "id": "e-sales-backing-down",
+          "type": "rare",
+          "rarity": 0.2,
+          "title": "Sales Admits They Overcommunicated",
+          "description": "Sales sends a follow-up: 'I may have overpromised the timeline. I told them 'soon'. Let me manage expectations on my end.' This is unexpected growth.",
+          "statDelta": { "stakeholderTrust": 2, "riskCompliance": -2 },
+          "itemDropped": null,
+          "questUnlocked": null
+        }
+      }
+    }
+  ],
+  "quests": [
+    {
+      "id": "q-sprint-midpoint-d3",
+      "title": "Stabilize the Sprint",
+      "description": "Make 2 decisions that address delivery speed or team blockers.",
+      "type": "daily",
+      "steps": 2,
+      "reward": { "statDelta": { "deliverySpeed": 8, "teamHealth": 1 }, "itemId": "jira-ticket", "xp": 40 },
+      "failPenalty": { "deliverySpeed": -5 },
+      "expiresDay": 3,
+      "hidden": false
+    },
+    {
+      "id": "q-model-defense-d3",
+      "title": "Defend the Model Quality",
+      "description": "Take decisive action on the eval regression. Once is enough.",
+      "type": "daily",
+      "steps": 1,
+      "reward": { "statDelta": { "modelQuality": 2, "riskCompliance": -1 }, "itemId": "prompt-template", "xp": 45 },
+      "failPenalty": { "modelQuality": -2 },
+      "expiresDay": 4,
+      "hidden": false
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScopeCreep Survival</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <style>
+    @keyframes auth-blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    #auth-guard {
+      position: fixed;
+      inset: 0;
+      background: #0f0f1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity 0.25s ease;
+    }
+    #auth-guard.hide { opacity: 0; pointer-events: none; }
+    #auth-guard span {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      color: #00f5d4;
+      animation: auth-blink 1s steps(1) infinite;
+    }
+  </style>
+  <body>
+    <!-- Auth guard: removed once Firebase confirms user is logged in -->
+    <div id="auth-guard"><span>LOADING...</span></div>
+
+    <div id="app">
+
+      <!-- ── HUD ──────────────────────────────────────────────── -->
+      <header id="hud"></header>
+
+      <!-- ── 3-Column Game Layout ─────────────────────────────── -->
+      <div id="game-layout">
+
+        <!-- Left: Quest Log -->
+        <aside id="quest-log"></aside>
+
+        <!-- Center: Scene + Choices -->
+        <main id="scene-area">
+          <div id="scenario-card"></div>
+          <div id="choice-panel"></div>
+        </main>
+
+        <!-- Right: Stats + Event Feed -->
+        <aside id="side-panel"></aside>
+
+      </div>
+
+      <!-- ── Office Animation Strip ────────────────────────────── -->
+      <div id="pm-animation" aria-hidden="true">
+        <div class="pm-scene">
+
+          <!-- Desk (left) -->
+          <div class="pm-obj pm-desk-group">
+            <div class="pm-monitor">🖥</div>
+            <div class="pm-desk-surface"></div>
+            <div class="pm-chair"></div>
+          </div>
+
+          <!-- Floor -->
+          <div class="pm-floor-line"></div>
+
+          <!-- Coffee machine (right) -->
+          <div class="pm-obj pm-coffee-group">
+            <div class="pm-coffee-machine">
+              <div class="pm-coffee-screen"></div>
+              <div class="pm-coffee-dispense"></div>
+            </div>
+            <div class="pm-coffee-cup">☕</div>
+            <div class="pm-steam">~&nbsp;~&nbsp;~</div>
+          </div>
+
+          <!-- Flavor label -->
+          <div class="pm-scene-label">// somewhere between standups</div>
+
+          <!-- Walking PM character -->
+          <div class="pm-char-wrap">
+            <div class="pm-sprite-wrap">
+              <div class="pm-px pm-body-px"></div>
+              <div class="pm-px pm-legs-a"></div>
+              <div class="pm-px pm-legs-b"></div>
+            </div>
+            <!-- Thought bubble (shown on click) -->
+            <div class="pm-thought" id="pm-thought"></div>
+            <!-- Invisible click target over the sprite -->
+            <div class="pm-click-area" id="pm-click-area"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Hotbar ─────────────────────────────────────────────── -->
+      <footer id="hotbar"></footer>
+
+      <!-- ── Floating Toasts ────────────────────────────────────── -->
+      <div id="notifications" aria-live="polite"></div>
+
+    </div>
+    <!-- Auth guard check — must resolve before game is usable -->
+    <script type="module">
+      import { initializeApp }
+        from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'
+      import { getAuth, onAuthStateChanged, signOut }
+        from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'
+
+      const auth = getAuth(initializeApp({
+        apiKey:            'AIzaSyA7PYljYgfVOcMQontn17bcP0rzPZcBH5k',
+        authDomain:        'scopecreepsurvival.firebaseapp.com',
+        projectId:         'scopecreepsurvival',
+        storageBucket:     'scopecreepsurvival.firebasestorage.app',
+        messagingSenderId: '175127345845',
+        appId:             '1:175127345845:web:4220713981a38d69de9cfc',
+        measurementId:     'G-1X0VXGEJ49',
+      }))
+
+      onAuthStateChanged(auth, user => {
+        if (!user) {
+          window.location.replace('login.html')
+        } else {
+          const guard = document.getElementById('auth-guard')
+          guard.classList.add('hide')
+          setTimeout(() => guard.remove(), 280)
+        }
+      })
+
+      // Logout — delegated listener so it works after HUD re-renders
+      document.addEventListener('click', async e => {
+        if (e.target?.closest('#btn-logout')) {
+          await signOut(auth)
+          window.location.replace('landing.html')
+        }
+      })
+    </script>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

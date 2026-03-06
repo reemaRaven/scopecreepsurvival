@@ -1,0 +1,17 @@
+{
+  "name": "scopecreep-survival",
+  "version": "1.0.0",
+  "description": "Daily Life of an AI PM — a pixel-art choice game",
+  "scripts": {
+    "dev": "vite --open",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vite": "^5.2.0",
+    "vitest": "^4.0.18"
+  }
+}
