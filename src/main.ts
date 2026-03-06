@@ -1,4 +1,6 @@
 import './style.css'
+import { inject } from '@vercel/analytics'
+inject()
 import type { Choice, GameState } from './types/index.js'
 import { createInitialState, transition, getCurrentScenario } from './engine/GameEngine.js'
 import { saveGame, loadGame, clearSave } from './engine/SaveEngine.js'
