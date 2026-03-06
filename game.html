@@ -142,7 +142,7 @@
       document.addEventListener('click', async e => {
         if (e.target?.closest('#btn-logout')) {
           await signOut(auth)
-          window.location.replace('landing.html')
+          window.location.replace('/')
         }
       })
     </script>
