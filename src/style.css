@@ -1826,19 +1826,29 @@ body {
 /* ══ MOBILE RESPONSIVE ════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
+  /* Fix iOS 100vh clipping: use dynamic viewport height */
+  #app {
+    height: 100dvh;
+    /* Remove animation strip row — gives back 150px on mobile */
+    grid-template-rows: var(--hud-h) 1fr var(--hotbar-h);
+    grid-template-areas: "hud" "game" "hotbar";
+  }
+
+  /* Hide animation strip and side panels */
+  #pm-animation { display: none; }
+  #quest-log, #side-panel { display: none; }
+
   /* Collapse 3-column layout to scene only */
   #game-layout {
     grid-template-columns: 1fr;
     grid-template-areas: "scene";
   }
-  #quest-log, #side-panel { display: none; }
 
   /* Compact HUD */
   #hud {
     padding: 0 var(--s2);
     gap: var(--s2);
     flex-wrap: nowrap;
-    overflow: hidden;
     min-height: var(--hud-h);
   }
   .hud-left, .hud-right { min-width: 0; gap: 2px; }
