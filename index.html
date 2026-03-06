@@ -837,6 +837,27 @@
       .hero-ctas { flex-direction: column; align-items: center; }
       .features { grid-template-columns: 1fr; }
       .enc-grid  { grid-template-columns: 1fr; }
+
+      /* Hero: remove stacking context issues on mobile */
+      #hero {
+        min-height: 100svh;
+        overflow-x: hidden;
+        overflow-y: visible;
+        isolation: auto;
+        padding: 80px 20px 48px;
+      }
+      /* Hide floating decorations that cause z-index conflicts */
+      .jira-field, .badge { display: none; }
+      .hero-vignette { display: none; }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+      }
+      .hero-title { font-size: clamp(16px, 6vw, 28px); }
+      .hero-tagline { font-size: clamp(8px, 2.5vw, 11px); margin-bottom: 32px; }
+      #stats-bar .stats-row { gap: 16px; }
+      .stat-n { font-size: 20px; }
+      .stat-l { font-size: 11px; }
     }
 
     @media (max-width: 400px) {
