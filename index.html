@@ -1775,16 +1775,38 @@
       btn.style.background = muted ? 'rgba(255,255,255,0.04)' : 'rgba(0,245,212,0.08)'
     }
 
-    // Start on first user interaction (browser autoplay policy)
+    // Try autoplay immediately; fall back to first interaction if browser blocks it
     function onFirstInteraction() {
       if (started) return
       started = true
       start()
-      document.removeEventListener('click',  onFirstInteraction)
-      document.removeEventListener('scroll', onFirstInteraction)
+      document.removeEventListener('click',     onFirstInteraction)
+      document.removeEventListener('scroll',    onFirstInteraction)
+      document.removeEventListener('mousemove', onFirstInteraction)
+      document.removeEventListener('keydown',   onFirstInteraction)
     }
-    document.addEventListener('click',  onFirstInteraction)
-    document.addEventListener('scroll', onFirstInteraction)
+    document.addEventListener('click',     onFirstInteraction)
+    document.addEventListener('scroll',    onFirstInteraction)
+    document.addEventListener('mousemove', onFirstInteraction)
+    document.addEventListener('keydown',   onFirstInteraction)
+
+    // Attempt immediate autoplay on load
+    window.addEventListener('load', () => {
+      if (started) return
+      init()
+      ctx.resume().then(() => {
+        if (ctx.state === 'running') {
+          started = true
+          muted = false
+          syncBtn()
+          const t = ctx.currentTime
+          master.gain.cancelScheduledValues(t)
+          master.gain.setValueAtTime(0, t)
+          master.gain.linearRampToValueAtTime(MASTER_VOL, t + 1.5)
+          if (!melodyTimer) scheduleMelody()
+        }
+      })
+    })
   })()
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
