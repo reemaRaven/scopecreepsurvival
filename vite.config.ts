@@ -1,9 +1,17 @@
 import { defineConfig } from 'vite'
+import { resolve } from 'path'
 
 export default defineConfig({
   root: '.',
   build: {
     outDir: 'dist',
+    rollupOptions: {
+      input: {
+        landing: resolve(__dirname, 'landing.html'),
+        login: resolve(__dirname, 'login.html'),
+        main: resolve(__dirname, 'index.html'),
+      },
+    },
   },
   test: {
     environment: 'node',
