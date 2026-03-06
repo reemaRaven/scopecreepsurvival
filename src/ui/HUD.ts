@@ -4,6 +4,11 @@ import { getXPProgress } from '../engine/XPEngine.js'
 
 export function renderHUD(state: GameState): void {
   document.getElementById('hud')!.innerHTML = buildHUD(state)
+  // Also populate the mobile XP strip (visible only on small screens via CSS)
+  const strip = document.getElementById('level-strip')
+  if (strip) {
+    strip.innerHTML = state.status !== 'start' ? buildXPBar(state.xp, state.level) : ''
+  }
 }
 
 function buildHUD(state: GameState): string {

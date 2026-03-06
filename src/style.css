@@ -1825,6 +1825,9 @@ body {
 
 /* ══ MOBILE RESPONSIVE ════════════════════════════════════════════════════════════ */
 
+/* Level strip: hidden on desktop, shown above quest log on mobile */
+#level-strip { display: none; }
+
 @media (max-width: 768px) {
   /* ── App shell: HUD / game column / animation strip / hotbar ── */
   #app {
@@ -1834,60 +1837,69 @@ body {
     overflow-x: hidden;
   }
 
-  /* ── Show animation strip at reduced height ── */
-  #pm-animation { display: flex; }
-  .pm-scene     { height: 100px; }
+  /* ── Animation strip: visible, overflow visible so thought bubble isn't clipped ── */
+  #pm-animation { display: flex; overflow: visible; position: relative; z-index: 5; }
+  .pm-scene     { height: 100px; overflow: visible; }
 
-  /* ── Game layout: vertical flex stack instead of 3-column grid ── */
+  /* ── Game layout: vertical flex stack instead of 3-column grid ──
+     Visual order: stats → level bar → quests → scene (scrollable) */
   #game-layout {
     display: flex;
     flex-direction: column;
     min-width: 0;
     overflow: hidden;
   }
+  #side-panel  { order: 1; }
+  #level-strip { order: 2; }
+  #quest-log   { order: 3; }
+  #scene-area  { order: 4; }
 
-  /* ── Stats panel (top strip) ── */
+  /* ── Stats panel: 2-column compact grid ── */
   #side-panel {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
     flex-shrink: 0;
     overflow: hidden;
     border-bottom: 1px solid var(--panel-border);
     padding: 4px var(--s2);
   }
-  /* 2-column stat grid */
-  #side-panel .side-header { display: none; }
+  #side-panel .side-header        { display: none; }
+  #side-panel .event-feed-header,
+  #side-panel .event-feed         { display: none; }
+  /* Each stat row: 2 per row (50% each) */
   #side-panel .stat-row {
-    display: inline-flex;
-    flex-direction: column;
-    width: calc(50% - 4px);
-    margin: 2px;
+    flex: 0 0 calc(50% - 2px);
+    min-width: 0;
     padding: 0;
   }
-  #side-panel .stat-rows-wrap,
-  #side-panel > .stat-row:nth-child(-n+5) { display: inline-flex; }
-  /* Lay all stat-rows side by side in 2 columns via flex wrap */
-  #side-panel {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
-  #side-panel .stat-row-header { gap: 4px; }
+  #side-panel .stat-row-header { display: flex; justify-content: space-between; }
   #side-panel .stat-row-label  { font-size: 5px; }
   #side-panel .stat-row-value  { font-size: 5px; }
-  #side-panel .stat-bar-track  { height: 5px; }
-  /* Hide event feed on mobile — shown in notifications instead */
-  #side-panel .event-feed-header,
-  #side-panel .event-feed { display: none; }
+  #side-panel .stat-bar-track  { height: 4px; margin-top: 2px; }
+
+  /* ── Level / XP strip (above quest log) ── */
+  #level-strip {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 3px var(--s2);
+    border-bottom: 1px solid var(--panel-border);
+    background: var(--panel-bg-alt);
+    gap: var(--s2);
+  }
+  /* Hide XP bar from HUD center on mobile — shown in level-strip instead */
+  .hud-center .xp-bar-wrap { display: none; }
 
   /* ── Quest log (compact strip) ── */
   #quest-log {
     display: block;
     flex-shrink: 0;
-    overflow: hidden;
     border-bottom: 1px solid var(--panel-border);
     padding: 4px var(--s2);
-    max-height: 80px;
+    max-height: 76px;
     overflow-y: auto;
+    overflow-x: hidden;
   }
   .quest-log-header { font-size: 5px; margin-bottom: 3px; }
   .quest-item {
@@ -1898,13 +1910,8 @@ body {
   }
   .quest-name  { font-size: 5px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .quest-steps { display: none; }
-  .quest-progress-track {
-    width: 40px;
-    flex-shrink: 0;
-    height: 4px;
-  }
+  .quest-progress-track { width: 40px; flex-shrink: 0; height: 4px; }
   .delta-chips { display: none; }
-  /* Hide mini inventory here — it's already in the hotbar */
   .mini-inventory-header,
   .mini-inventory-slots { display: none; }
 
@@ -1953,7 +1960,11 @@ body {
   .hud-center { min-width: 0; flex: 1 1 0; gap: 2px; overflow: hidden; }
   .hud-right  { min-width: 0; gap: 2px; flex-shrink: 0; }
   .hud-title     { font-size: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .hud-day-phase { font-size: 6px; white-space: nowrap; overflow: hidden; }
+  .hud-day-phase { font-size: 5px; white-space: nowrap; }
+  /* Compact action buttons so day/phase + buttons all fit in hud-right */
+  .hud-restart-btn { font-size: 5px; padding: 2px 4px; }
+  .hud-logout-btn  { font-size: 5px; padding: 2px 4px; }
+  .hud-buttons     { gap: 3px; }
   .xp-label { display: none; }
 
   /* ── Hotbar ── */
