@@ -313,7 +313,7 @@
 
       <div class="divider">OR</div>
 
-      <a class="btn-guest" href="index.html">PLAY AS GUEST (NO ACCOUNT)</a>
+      <a class="btn-guest" href="game.html">PLAY AS GUEST (NO ACCOUNT)</a>
 
       <p class="card-note">
         Signing in saves your progress and unlocks achievements across sessions.
@@ -358,7 +358,7 @@
     onAuthStateChanged(auth, user => {
       const overlay = document.getElementById('auth-loading')
       if (user) {
-        window.location.replace('index.html')
+        window.location.replace('game.html')
       } else {
         overlay.classList.add('hide')
         setTimeout(() => overlay.remove(), 280)

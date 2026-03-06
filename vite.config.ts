@@ -7,9 +7,9 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        landing: resolve(__dirname, 'landing.html'),
+        index: resolve(__dirname, 'index.html'),
         login: resolve(__dirname, 'login.html'),
-        main: resolve(__dirname, 'index.html'),
+        game: resolve(__dirname, 'game.html'),
       },
     },
   },
@@ -17,15 +17,4 @@ export default defineConfig({
     environment: 'node',
     include: ['src/**/*.test.ts'],
   },
-  plugins: [
-    {
-      name: 'redirect-root-to-landing',
-      configureServer(server) {
-        server.middlewares.use((req, _res, next) => {
-          if (req.url === '/') req.url = '/landing.html'
-          next()
-        })
-      },
-    },
-  ],
 })
