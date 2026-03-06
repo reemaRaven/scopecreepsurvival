@@ -1754,6 +1754,37 @@
   })()
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    window.addEventListener('load', function () {
+      var REFERRER_MAP = {
+        'linkedin.com':'LinkedIn','instagram.com':'Instagram','l.instagram.com':'Instagram',
+        'facebook.com':'Facebook','fb.com':'Facebook','m.facebook.com':'Facebook',
+        'reddit.com':'Reddit','old.reddit.com':'Reddit',
+        'youtube.com':'YouTube','youtu.be':'YouTube',
+        'discord.com':'Discord','discord.gg':'Discord',
+        'whatsapp.com':'WhatsApp','twitter.com':'Twitter','t.co':'Twitter','x.com':'Twitter',
+      }
+      var params = new URLSearchParams(window.location.search)
+      var utm = params.get('utm_source')
+      var source = utm ? utm.charAt(0).toUpperCase() + utm.slice(1).toLowerCase() : 'Direct'
+      if (!utm && document.referrer) {
+        try {
+          var host = new URL(document.referrer).hostname.replace(/^www\./, '')
+          for (var key in REFERRER_MAP) {
+            if (host === key || host.endsWith('.' + key)) { source = REFERRER_MAP[key]; break }
+          }
+          if (source === 'Direct') source = host
+        } catch(e) {}
+      }
+      window.va && window.va('event', { name: 'page_visit', data: {
+        page: 'landing',
+        source: source,
+        utm_source:   params.get('utm_source')   || '',
+        utm_medium:   params.get('utm_medium')   || '',
+        utm_campaign: params.get('utm_campaign') || '',
+      }})
+    })
+  </script>
 
 </body>
 </html>

@@ -1,6 +1,8 @@
 import './style.css'
 import { inject } from '@vercel/analytics'
+import { trackPageVisit } from './tracking.js'
 inject()
+trackPageVisit('game')
 import type { Choice, GameState } from './types/index.js'
 import { createInitialState, transition, getCurrentScenario } from './engine/GameEngine.js'
 import { saveGame, loadGame, clearSave } from './engine/SaveEngine.js'
