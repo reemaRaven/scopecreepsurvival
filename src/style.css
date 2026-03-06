@@ -1826,44 +1826,106 @@ body {
 /* ══ MOBILE RESPONSIVE ════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  /* Fix iOS 100vh clipping: use dynamic viewport height */
+  /* ── App shell: HUD / game column / animation strip / hotbar ── */
   #app {
     height: 100dvh;
-    /* Remove animation strip row — gives back 150px on mobile */
-    grid-template-rows: var(--hud-h) 1fr var(--hotbar-h);
-    grid-template-areas: "hud" "game" "hotbar";
+    grid-template-rows: var(--hud-h) 1fr 100px var(--hotbar-h);
+    grid-template-areas: "hud" "game" "animation" "hotbar";
     overflow-x: hidden;
   }
 
-  /* Hide animation strip and side panels */
-  #pm-animation { display: none; }
-  #quest-log, #side-panel { display: none; }
+  /* ── Show animation strip at reduced height ── */
+  #pm-animation { display: flex; }
+  .pm-scene     { height: 100px; }
 
-  /* Collapse 3-column layout to scene only; prevent grid cell from
-     expanding beyond viewport (min-width: 0 overrides auto minimum) */
+  /* ── Game layout: vertical flex stack instead of 3-column grid ── */
   #game-layout {
-    grid-template-columns: 1fr;
-    grid-template-areas: "scene";
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     min-width: 0;
+    overflow: hidden;
   }
 
-  /* Scene area: clamp to grid cell, never expand past viewport */
+  /* ── Stats panel (top strip) ── */
+  #side-panel {
+    display: block;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-bottom: 1px solid var(--panel-border);
+    padding: 4px var(--s2);
+  }
+  /* 2-column stat grid */
+  #side-panel .side-header { display: none; }
+  #side-panel .stat-row {
+    display: inline-flex;
+    flex-direction: column;
+    width: calc(50% - 4px);
+    margin: 2px;
+    padding: 0;
+  }
+  #side-panel .stat-rows-wrap,
+  #side-panel > .stat-row:nth-child(-n+5) { display: inline-flex; }
+  /* Lay all stat-rows side by side in 2 columns via flex wrap */
+  #side-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  #side-panel .stat-row-header { gap: 4px; }
+  #side-panel .stat-row-label  { font-size: 5px; }
+  #side-panel .stat-row-value  { font-size: 5px; }
+  #side-panel .stat-bar-track  { height: 5px; }
+  /* Hide event feed on mobile — shown in notifications instead */
+  #side-panel .event-feed-header,
+  #side-panel .event-feed { display: none; }
+
+  /* ── Quest log (compact strip) ── */
+  #quest-log {
+    display: block;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-bottom: 1px solid var(--panel-border);
+    padding: 4px var(--s2);
+    max-height: 80px;
+    overflow-y: auto;
+  }
+  .quest-log-header { font-size: 5px; margin-bottom: 3px; }
+  .quest-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 0;
+  }
+  .quest-name  { font-size: 5px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .quest-steps { display: none; }
+  .quest-progress-track {
+    width: 40px;
+    flex-shrink: 0;
+    height: 4px;
+  }
+  .delta-chips { display: none; }
+  /* Hide mini inventory here — it's already in the hotbar */
+  .mini-inventory-header,
+  .mini-inventory-slots { display: none; }
+
+  /* ── Scene area: scrollable play zone ── */
   #scene-area {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: var(--s2);
     gap: var(--s2);
-    min-width: 0;
-    overflow-x: hidden;
   }
 
-  /* Panels: use border instead of outline so bevel stays inside the box */
+  /* ── Panels: border stays inside box (outline renders outside) ── */
   .mc-panel {
     outline: none;
     border: 2px solid var(--panel-border);
     padding: var(--s2) var(--s3);
   }
 
-  /* Scenario card text: constrain and wrap */
+  /* ── Scenario text: wrap and scale for small screens ── */
   .scenario-panel { min-width: 0; }
   .scenario-title {
     font-size: 9px;
@@ -1874,16 +1936,12 @@ body {
   .scenario-flavor { font-size: 14px; word-break: break-word; }
   .scenario-body   { font-size: 16px; word-break: break-word; }
 
-  /* Choice panel: constrain */
+  /* ── Choice panel ── */
   #choice-panel { min-width: 0; }
-  .choice-btn {
-    min-width: 0;
-    word-break: break-word;
-    overflow-wrap: break-word;
-  }
-  .choice-text { white-space: normal; word-break: break-word; }
+  .choice-btn   { min-width: 0; word-break: break-word; overflow-wrap: break-word; }
+  .choice-text  { white-space: normal; word-break: break-word; }
 
-  /* Compact HUD — prevent any child from forcing the bar wider than viewport */
+  /* ── HUD: prevent children from forcing bar wider than viewport ── */
   #hud {
     padding: 0 var(--s2);
     gap: var(--s2);
@@ -1891,30 +1949,24 @@ body {
     min-height: var(--hud-h);
     overflow: hidden;
   }
-  .hud-left  { min-width: 0; gap: 2px; flex-shrink: 0; }
-  .hud-center {
-    min-width: 0;
-    flex: 1 1 0;
-    gap: 2px;
-    overflow: hidden;
-  }
-  .hud-right { min-width: 0; gap: 2px; flex-shrink: 0; }
-  .hud-title { font-size: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hud-left   { min-width: 0; gap: 2px; flex-shrink: 0; }
+  .hud-center { min-width: 0; flex: 1 1 0; gap: 2px; overflow: hidden; }
+  .hud-right  { min-width: 0; gap: 2px; flex-shrink: 0; }
+  .hud-title     { font-size: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .hud-day-phase { font-size: 6px; white-space: nowrap; overflow: hidden; }
   .xp-label { display: none; }
 
-  /* Hotbar: horizontal scroll on small screens */
+  /* ── Hotbar ── */
   #hotbar {
     padding: 0 var(--s2);
     justify-content: flex-start;
     overflow-x: auto;
     overflow-y: hidden;
   }
-  .hotbar-wrap { width: 100%; justify-content: flex-start; gap: var(--s2); }
+  .hotbar-wrap  { width: 100%; justify-content: flex-start; gap: var(--s2); }
   .hotbar-slots { flex-shrink: 0; }
-  .hotbar-slot { width: 40px; height: 40px; }
+  .hotbar-slot  { width: 40px; height: 40px; }
 
-  /* Make choice buttons easier to tap */
   .mc-btn { padding: var(--s3) var(--s3); min-height: 40px; }
 }
 
