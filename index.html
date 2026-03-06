@@ -1506,6 +1506,8 @@
   <script type="module">
     import { initializeApp }
       from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'
+    import { getAnalytics, logEvent }
+      from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js'
     import { getAuth, onAuthStateChanged }
       from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'
 
@@ -1518,7 +1520,39 @@
       appId:             '1:175127345845:web:4220713981a38d69de9cfc',
       measurementId:     'G-1X0VXGEJ49',
     })
+    const analytics = getAnalytics(app)
     const auth = getAuth(app)
+
+    // ── Referral source tracking ───────────────────────────────────────────────
+    ;(function trackSource() {
+      const REFERRER_MAP = {
+        'linkedin.com':'linkedin','instagram.com':'instagram','l.instagram.com':'instagram',
+        'facebook.com':'facebook','fb.com':'facebook','m.facebook.com':'facebook',
+        'reddit.com':'reddit','old.reddit.com':'reddit',
+        'youtube.com':'youtube','youtu.be':'youtube',
+        'discord.com':'discord','discord.gg':'discord',
+        'whatsapp.com':'whatsapp','twitter.com':'twitter','t.co':'twitter','x.com':'twitter',
+      }
+      const p = new URLSearchParams(window.location.search)
+      const utm = p.get('utm_source')
+      let source = utm ? utm.toLowerCase() : 'direct'
+      if (!utm && document.referrer) {
+        try {
+          const host = new URL(document.referrer).hostname.replace(/^www\./, '')
+          for (const [k, v] of Object.entries(REFERRER_MAP)) {
+            if (host === k || host.endsWith('.' + k)) { source = v; break }
+          }
+          if (source === 'direct') source = host
+        } catch(_) {}
+      }
+      logEvent(analytics, 'referral_visit', {
+        page:         'landing',
+        source,
+        utm_source:   p.get('utm_source')   ?? '',
+        utm_medium:   p.get('utm_medium')   ?? '',
+        utm_campaign: p.get('utm_campaign') ?? '',
+      })
+    })()
 
     onAuthStateChanged(auth, user => {
       const dest = user ? 'game.html' : 'login.html'
