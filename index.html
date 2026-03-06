@@ -802,17 +802,24 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
-      nav { padding: 0 16px; }
-      .nav-logo { font-size: 8px; }
+      nav { padding: 0 16px; gap: 8px; }
+      .nav-logo { font-size: 7px; }
+      .nav-right { gap: 6px; }
+      .btn-ghost { padding: 6px 10px; font-size: 6px; }
+      .btn-play  { padding: 6px 10px; font-size: 6px; }
+      .sec { padding: 56px 16px; }
       .about-layout { flex-direction: column; align-items: center; }
       .about-card { flex-direction: column; align-items: center; padding: 28px 20px; text-align: center; }
       .about-bio { border-left: none; padding-left: 0; }
       .about-links { justify-content: center; }
       .hero-ctas { flex-direction: column; align-items: center; }
+      .features { grid-template-columns: 1fr; }
+      .enc-grid  { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 400px) {
-      .btn-cta-primary, .btn-cta-ghost { font-size: 8px; padding: 13px 28px; }
+      .btn-cta-primary, .btn-cta-ghost { font-size: 8px; padding: 13px 20px; width: 100%; text-align: center; }
+      nav { height: auto; padding: 10px 16px; flex-wrap: wrap; }
     }
 
     /* ── HOW TO PLAY — win/lose conditions ── */
