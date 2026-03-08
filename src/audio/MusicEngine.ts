@@ -92,6 +92,25 @@ const HIHAT_GAIN  = 0.06
 
 const LOOKAHEAD = 0.2
 
+// ── iOS / Safari AudioContext compat ──────────────────────────────────────────
+
+// Safari (including all iOS browsers) uses webkitAudioContext.
+const AudioCtxCtor: typeof AudioContext =
+  window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+
+/**
+ * iOS Safari locks audio until a buffer is started synchronously inside a
+ * user-gesture handler. Play a silent zero-length buffer to unlock.
+ */
+function iosUnlock(ctx: AudioContext): void {
+  const buf = ctx.createBuffer(1, 1, ctx.sampleRate)
+  const src = ctx.createBufferSource()
+  src.buffer = buf
+  src.connect(ctx.destination)
+  src.start(0)
+  src.stop(0)
+}
+
 // ── Noise buffer ──────────────────────────────────────────────────────────────
 
 function makeNoiseBuffer(ctx: AudioContext): AudioBuffer {
@@ -196,7 +215,7 @@ class ChiptuneEngine {
     this._muted = false
     const c = this.ensureCtx()
     if (!c) return
-    c.ctx.resume().then(() => {
+    void c.ctx.resume().then(() => {
       if (this.timer !== null || this._muted) return
       this.master!.gain.cancelScheduledValues(c.ctx.currentTime)
       this.master!.gain.setValueAtTime(MASTER_GAIN, c.ctx.currentTime)
@@ -274,7 +293,7 @@ class ChiptuneEngine {
     if (this.timer !== null) { clearTimeout(this.timer); this.timer = null }
     const c = this.ensureCtx()
     if (!c) return
-    c.ctx.resume().then(() => {
+    void c.ctx.resume().then(() => {
       if (this._muted) return
       this.nextLoop = c.ctx.currentTime + 0.05
       this.scheduleLoop()
@@ -319,13 +338,21 @@ class ChiptuneEngine {
   private ensureCtx(): { ctx: AudioContext; master: GainNode } | null {
     if (this._muted) return null
     if (!this.ctx) {
-      this.ctx    = new AudioContext()
+      this.ctx    = new AudioCtxCtor()
       this.master = this.ctx.createGain()
       this.master.gain.value = MASTER_GAIN
       this.master.connect(this.ctx.destination)
       this.noise  = makeNoiseBuffer(this.ctx)
+      // Unlock iOS audio — must run synchronously inside the user-gesture call stack.
+      iosUnlock(this.ctx)
+      // Resume context if browser created it in suspended state (iOS 13+).
+      void this.ctx.resume()
+      // Re-unlock if the app returns from background (iOS interrupts audio).
+      this.ctx.addEventListener('statechange', () => {
+        if (this.ctx?.state === 'suspended' && !this._muted) void this.ctx.resume()
+      })
     }
-    if (this.ctx.state === 'suspended') this.ctx.resume()
+    if (this.ctx.state === 'suspended') void this.ctx.resume()
     return { ctx: this.ctx, master: this.master! }
   }
 
